@@ -40,3 +40,23 @@
     }
 
 ?>
+
+<html>
+     <form action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="post">
+        Med Name: <input type="text" name="med_name"><br>
+        <input type="submit">
+    </form>
+</html>
+
+
+ <html>
+<head><title>Login</title></head>
+    <body>
+        <form action="<?PHP $_PHP_SELF ?>" method="post">
+            Mob_no <input type="text" name="txtmobile" value="" /><br/>
+            oneid <input type="text" name="oneid" value="" /><br/>
+            Username <input type="text" name="txtname" value="" /><br/>
+           <input type="submit" name="btnSubmit" value="Login"/>
+        </form>
+    </body>
+</html>

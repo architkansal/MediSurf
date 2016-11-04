@@ -37,3 +37,9 @@
 
 ?>
 
+<html>
+     <form action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="post">
+        Med Name: <input type="text" name="med_name"><br>
+        <input type="submit">
+    </form>
+</html>
