@@ -34,7 +34,10 @@ public class Display_Bill extends AppCompatActivity {
     int clicked_button;
     Vector<TextView> txt;
     Vector<TextView> prc;
-
+    float Optimize_total;
+    float Prescribed_total;
+    TextView ob;
+    TextView pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,12 @@ public class Display_Bill extends AppCompatActivity {
             System.out.println(e);
         }
 
+        pb = (TextView) findViewById(R.id.pb_total);
+        ob = (TextView) findViewById(R.id.ob_total);
+
+        pb.setText(String.valueOf(Prescribed_total));
+        ob.setText(String.valueOf(Optimize_total));
+
         // Render Data Now...
 
         for(int i=0;i<v.size();i++) {
@@ -83,6 +92,7 @@ public class Display_Bill extends AppCompatActivity {
                     {
                         if(view==v.get(x)){
                             int cur = hm.get(x);
+                            int pcur = cur;
                             int siz = cnt.get(x);
                             cur = (cur+1)%siz;
                             hm.put(x,cur);
@@ -98,11 +108,18 @@ public class Display_Bill extends AppCompatActivity {
                                 String pz = j1.getString("price");
                                 ct.setText(nm);
                                 cp.setText(pz);
+                                JSONObject j2 = jo.getJSONObject(pcur);
+                                String pz2 = j2.getString("price");
+
+                                Optimize_total = Optimize_total - Float.valueOf(pz2) + Float.valueOf(pz);
+
+                                ob.setText(String.valueOf(Optimize_total));
                             }
                             catch(Exception e)
                             {
                                 System.out.println(e);
                             }
+
 
 
                         }
@@ -125,6 +142,9 @@ public class Display_Bill extends AppCompatActivity {
         TextView tv2 = new TextView(this);
         tv1.setText("Original :" +med1);
         tv2.setText(p1);
+
+        Prescribed_total = Prescribed_total + Float.valueOf(p1);
+
         l.addView(tv1,lp);
         l.addView(tv2,lp);
         l2.addView(l);
@@ -138,6 +158,9 @@ public class Display_Bill extends AppCompatActivity {
         TextView tv4 = new TextView(this);
         tv3.setText("Alternative :"+med2);
         tv4.setText(p2);
+
+        Optimize_total = Optimize_total + Float.valueOf(p2);
+
         Button b = new Button(this);
         b.setText("Change");
         b.setMinimumHeight(8);
