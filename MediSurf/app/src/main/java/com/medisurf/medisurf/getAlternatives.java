@@ -3,8 +3,10 @@ package com.medisurf.medisurf;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,17 +20,24 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import static com.medisurf.medisurf.R.id.med;
+import static com.medisurf.medisurf.URLGenerator.ip;
 
 public class getAlternatives extends AppCompatActivity  implements AsyncResponse {
     EditText medc_name;
     Button btnalternative;
-    String ip = "172.30.102.171:8088/medisurf";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("inside alternatives oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_alternatives);
+
+        Toolbar toolbar;
+        toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Drawer drawer= (Drawer) getSupportFragmentManager().findFragmentById(R.id.drawer_fragment);
+        drawer.setup(R.id.drawer_fragment, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
         medc_name = (EditText) findViewById(med);
         btnalternative = (Button) findViewById(R.id.btnalter);

@@ -1,13 +1,5 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -16,5 +8,26 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+        <!-- Base application theme. -->
+        <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+            <!-- Customize your theme here. -->
+            <item name="colorPrimary">@color/primarycolor</item>
+            <item name="colorPrimaryDark">@color/primarydark</item>
+            <item name="colorAccent">@color/accentcolor</item>
+        </style>
+        <style name="medisurf_toolbar" parent="Theme.AppCompat.NoActionBar">
+            <item name="android:textColorPrimary">#FFF</item>
+            <item name="android:homeAsUpIndicator">@drawable/back</item>
+        </style>
+        <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button">
+            <item name="colorButtonNormal">@color/accentcolor</item>
+            <item name="android:textColor">@android:color/white</item>
+        </style>
+
+        <style name="AppTheme.CustomTheme">
+            <item name="android:windowIsTranslucent">true</item>
+            <item name="android:windowCloseOnTouchOutside">true</item>
+        </style>
 
 </resources>

@@ -2,6 +2,7 @@ package com.medisurf.medisurf;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,11 @@ public class Display_Salt extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display__salt);
+
+        Toolbar toolbar;
+        toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 //        DisplayMetrics dm=new DisplayMetrics();
 //        getWindowManager().getDefaultDisplay().getMetrics(dm);

@@ -21,24 +21,37 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".getSalt"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".getSalt"
+                  android:label="Get Generic Name"
+           > </activity>
+
         <activity
             android:name=".Home"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_home"></activity>
+
         <activity
             android:name=".OptimizeBill"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="Optimize Bill"
+            ></activity>
 
+        <activity android:name=".GetBrands"
+            android:label="Get Brands"/>
 
-        <activity android:name=".Display_Salt" />
-        <activity android:name=".Display_Alternatives" />
-        <activity android:name=".Display_Brands"></activity>
+        <activity android:name=".getAlternatives"
+            android:label="Get Alternatives"></activity>
 
+        <activity android:name=".saltDescription"
+            android:label="About MediSurf"></activity>
+
+        <activity android:name=".Display_Salt"
+            android:label="Generic Salt"/>
+
+        <activity android:name=".Display_Alternatives"
+            android:label="Alternative Medicines"/>
+
+        <activity android:name=".Display_Brands"
+            android:label="Brand Name"></activity>
 
     </application>
 
