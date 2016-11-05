@@ -36,6 +36,9 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
     LinearLayout l1;
     Vector<EditText> v;
     int flag=0;
+    String nou;
+    String mg;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_optimiziebill);
@@ -108,6 +111,9 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
                         String ut = "unit"+Integer.toString(j);
                         String mgml = "mg_ml"+Integer.toString(j);
 
+                        nou = nou + et_nou.getText().toString();
+                        mg = mg + et_mg.getText().toString();
+
                         postData.put(mn, ""+et_mn.getText().toString());
                         postData.put(ut, ""+et_nou.getText().toString());
                         postData.put(mgml , ""+et_mg.getText().toString());
@@ -163,6 +169,8 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("data", jObj.toString());
+                i.putExtra("nou",nou);
+                i.putExtra("mg_ml",mg);
                 startActivity(i);
 
             }

@@ -93,7 +93,7 @@ public class GetBrands extends AppCompatActivity implements  AsyncResponse{
             {
                 //Toast.makeText(this, "Account created Successfully",
                   //      Toast.LENGTH_LONG).show();
-                Intent i = new Intent(this, Display_Salt.class);
+                Intent i = new Intent(this, Display_Brands.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("name","Brand");
