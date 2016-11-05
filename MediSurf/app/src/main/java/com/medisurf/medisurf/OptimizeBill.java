@@ -36,8 +36,8 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
     LinearLayout l1;
     Vector<EditText> v;
     int flag=0;
-    String nou;
-    String mg;
+    String nou="1 ";
+    String mg="1 ";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +65,7 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
                     EditText et1 = new EditText(view.getContext());
                     if(i==0) tv1.setText("Medicine Name : ");
                     else if(i==1) tv1.setText("No. of Units : ");
-                    else tv1.setText("mg/ml (Optional) : ");
+                    else tv1.setText("mg/ml : ");
                     l.addView(tv1,lp);
                     l.addView(et1, lp);
                     v.add(et1);
@@ -111,8 +111,8 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
                         String ut = "unit"+Integer.toString(j);
                         String mgml = "mg_ml"+Integer.toString(j);
 
-                        nou = nou + et_nou.getText().toString();
-                        mg = mg + et_mg.getText().toString();
+                        nou = nou + et_nou.getText().toString() +" ";
+                        mg = mg + et_mg.getText().toString() + " ";
 
                         postData.put(mn, ""+et_mn.getText().toString());
                         postData.put(ut, ""+et_nou.getText().toString());

@@ -53,6 +53,9 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
     JSONArray org;
     JSONObject orig = new JSONObject();
     JSONObject finals = new JSONObject();
+    String nou[];
+    String mg[];
+    Vector<Integer> total_units;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,23 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
         txt = new Vector<>();
         prc = new Vector<>();
         extras = getIntent().getExtras();
+        String s1 = extras.getString("nou");
+        String s2 = extras.getString("mg_ml");
+
+
+        nou = s1.split("\\s");
+        mg = s2.split("\\s");
+
+        total_units = new Vector<>();
+
+        for(int i=1;i<nou.length;i++)
+        {
+            total_units.add(Integer.valueOf(nou[i])*Integer.valueOf(mg[i]));
+            //System.out.println("hello sumit : " + nou[i]);
+        }
+
+        //for(int i=0;i<total_units.size();i++) System.out.println("Bye"+total_units);
+
         try {
             jobj = new JSONObject(extras.getString("data"));
             int count = 0;
@@ -84,8 +104,9 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
                 String oname = org.getString(k); k++;
                 cnt.put(count,jo.length());
                 String oprice = org.getString(k); k++;
+                String omgml = org.getString(k); k++;
                 postData.put("originals"+Integer.toString(count),oname);
-                add_dynamic(oname,j1.getString("name"),oprice,j1.getString("price"));
+                add_dynamic(count,oname,j1.getString("name"),oprice,j1.getString("price"),omgml,j1.getString("mg_ml"));
                 count++;
             }
         } catch (Exception e) {
@@ -95,8 +116,11 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
         pb = (TextView) findViewById(R.id.pb_total);
         ob = (TextView) findViewById(R.id.ob_total);
 
-        pb.setText(String.valueOf(Prescribed_total));
-        ob.setText(String.valueOf(Optimize_total));
+        String sf1 = String.format("%.2f",Prescribed_total);
+        pb.setText(sf1);
+
+        String sf2 = String.format("%.2f",Optimize_total);
+        ob.setText(sf2);
 
         // Render Data Now...
 
@@ -122,14 +146,19 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
 //                                String oprice = org.getString(k); k++;
                                 String nm = j1.getString("name");
                                 String pz = j1.getString("price");
-                                ct.setText(nm);
-                                cp.setText(pz);
+                                ct.setText("Alternative :"+nm);
+                                float f = Float.valueOf(pz)/Float.valueOf(j1.getString("mg_ml"));
+                                f = f * total_units.get(x);
+                                String sf1 = String.format("%.2f",f);
+                                cp.setText(sf1);
                                 JSONObject j2 = jo.getJSONObject(pcur);
                                 String pz2 = j2.getString("price");
+                                float f1 = Float.valueOf(pz2)/Float.valueOf(j2.getString("mg_ml"));
+                                f1 = f1 * total_units.get(x);
+                                Optimize_total = Optimize_total - f1 + f;
 
-                                Optimize_total = Optimize_total - Float.valueOf(pz2) + Float.valueOf(pz);
-
-                                ob.setText(String.valueOf(Optimize_total));
+                                String sof1 = String.format("%.2f",Optimize_total);
+                                ob.setText(String.valueOf(sof1));
                             }
                             catch(Exception e)
                             {
@@ -230,7 +259,7 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
     }
 
 
-    public void add_dynamic(String med1,String med2,String p1,String p2)
+    public void add_dynamic(int count,String med1,String med2,String p1,String p2,String mg1,String mg2)
     {
         System.out.println("Anshul " + med1 + med2 + p1 + p2);
         LinearLayout l2 = (LinearLayout) findViewById(R.id.l2);
@@ -242,9 +271,17 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
         TextView tv1 = new TextView(this);
         TextView tv2 = new TextView(this);
         tv1.setText("Original :" +med1);
-        tv2.setText(p1);
 
-        Prescribed_total = Prescribed_total + Float.valueOf(p1);
+        float f1 = Float.valueOf(p1)/Float.valueOf(mg1);
+
+        f1 = f1 * total_units.get(count);
+        System.out.println(f1);
+        String sf1 = String.format("%.2f",f1);
+
+        tv2.setText(sf1);
+
+
+        Prescribed_total = Prescribed_total + f1;
 
         l.addView(tv1,lp);
         l.addView(tv2,lp);
@@ -258,9 +295,12 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
         TextView tv3 = new TextView(this);
         TextView tv4 = new TextView(this);
         tv3.setText("Alternative :"+med2);
-        tv4.setText(p2);
+        float f2 = Float.valueOf(p2)/Float.valueOf(mg2);
+        f2 = f2 * total_units.get(count);
+        String sf2 = String.format("%.2f",f2);
+        tv4.setText(sf2);
 
-        Optimize_total = Optimize_total + Float.valueOf(p2);
+        Optimize_total = Optimize_total + f2;
 
         Button b = new Button(this);
         b.setText("Change");
@@ -284,6 +324,8 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
         iv.setBackgroundColor(Color.parseColor("#2b282e"));
         l.addView(iv,lp);
         l2.addView(l);
+
+        //System.out.println("SUMIT BYE");
     }
 
     private boolean isNetworkAvailable() {
