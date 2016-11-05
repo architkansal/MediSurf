@@ -21,28 +21,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".getSalt"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"> </activity>
+                  android:label="Get Generic Name"
+           > </activity>
 
         <activity
             android:name=".Home"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/title_activity_home"></activity>
 
         <activity
             android:name=".OptimizeBill"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="Optimize Bill"
+            ></activity>
 
-        <activity android:name=".GetBrands" />
-<<<<<<< HEAD
-        <activity android:name=".getAlternatives" />
-        <activity android:name=".saltDescription"></activity>
-=======
-        <activity android:name=".getAlternatives"></activity>
+        <activity android:name=".GetBrands"
+            android:label="Get Brands"/>
 
->>>>>>> 96814263fdd07a925e404b29633015046f199c1d
+        <activity android:name=".getAlternatives"
+            android:label="Get Alternatives"></activity>
+
+        <activity android:name=".saltDescription"
+            android:label="About MediSurf"></activity>
+
+        <activity android:name=".Display_Salt"
+            android:label="Generic Salt"/>
+
+        <activity android:name=".Display_Alternatives"
+            android:label="Alternative Medicines"/>
+
+        <activity android:name=".Display_Brands"
+            android:label="Brand Name"></activity>
+
     </application>
 
 </manifest>

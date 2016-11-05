@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -23,19 +25,28 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Vector;
 
+import static com.medisurf.medisurf.URLGenerator.ip;
+
 /**
  * Created by Anshul Goyal on 04-11-2016.
  */
 
 public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
 
-    String ip = "172.30.102.171:8088/medisurf";
     LinearLayout l1;
     Vector<EditText> v;
     int flag=0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_optimiziebill);
+
+        Toolbar toolbar;
+        toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Drawer drawer= (Drawer) getSupportFragmentManager().findFragmentById(R.id.drawer_fragment);
+        drawer.setup(R.id.drawer_fragment, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+
         v = new Vector<EditText>();
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,19 +104,24 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
                         i++;
                         EditText et_mg = v.get(i);
 
-                        postData.put("med_name"+String.valueOf(j), et_mn.getText());
-                        postData.put("unit"+String.valueOf(j), et_nou.getText());
-                        postData.put("mg_ml"+String.valueOf(j), et_mg.getText());
+                        String mn = "med_name"+Integer.toString(j);
+                        String ut = "unit"+Integer.toString(j);
+                        String mgml = "mg_ml"+Integer.toString(j);
+
+                        postData.put(mn, ""+et_mn.getText().toString());
+                        postData.put(ut, ""+et_nou.getText().toString());
+                        postData.put(mgml , ""+et_mg.getText().toString());
 
                         j++;
 
                     }
-                    System.out.println("HELLLOOOO" + postData);
-                    postData.put("total_med",j);
+                    System.out.println("HELLLOOOO   " + postData);
+                    postData.put("total_med",Integer.toString(j));
+
                     PostResponseAsyncTask loginTask =
                             new PostResponseAsyncTask(OptimizeBill.this, postData);
                     System.out.println("Before Logging in");
-                    loginTask.execute("http://" + ip + "/OptimizeBill.php");
+                    loginTask.execute("http://" + ip + "/OptimiseBill.php");
                     System.out.println("After Logging in....");
                 }
 
@@ -130,17 +146,20 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
         JSONObject jObj= new JSONObject();
         try {
             jObj = new JSONObject(output.toString());
+            System.out.println(jObj);
+            System.out.println("Here");
         }
         catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
 
         try {
+            System.out.println("Here now");
             if (jObj.getString("success").equals("1"))
             {
-                Toast.makeText(this, "Account created Successfully",
-                        Toast.LENGTH_LONG).show();
-                this.finish();
+                //Toast.makeText(this, "Account created Successfully",
+                  //      Toast.LENGTH_LONG).show();
+                
             }
             else
             {

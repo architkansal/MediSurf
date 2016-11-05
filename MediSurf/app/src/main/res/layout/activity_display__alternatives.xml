@@ -4,7 +4,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.medisurf.medisurf.saltDescription">
+    tools:context="com.medisurf.medisurf.Display_Alternatives">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,28 +24,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/app_toolbar">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
-    <TextView
-        android:text="TextView"
-        android:id="@+id/txtview"
-        android:layout_centerHorizontal="true"
-        android:layout_width="300dp"
-        android:layout_height="500dp"
-        android:textSize="15dp"/>
-                </RelativeLayout>
-        </ScrollView>
+            </ScrollView>
 
 </RelativeLayout>
-    <fragment
-        android:id="@+id/drawer_fragment"
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:name="com.medisurf.medisurf.Drawer"
-        app:layout="@layout/fragment_drawer"
-        tools:layout="@layout/fragment_drawer" />
-
 </android.support.v4.widget.DrawerLayout>

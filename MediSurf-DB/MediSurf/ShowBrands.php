@@ -40,7 +40,7 @@
 
             $response['success']=1;
             $response['results']=$yourArray;
-            echo json_encode($response);
+            echo json_encode($response);    
         }
     }
     else

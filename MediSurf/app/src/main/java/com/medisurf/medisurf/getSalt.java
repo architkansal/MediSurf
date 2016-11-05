@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,16 +20,27 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import static com.medisurf.medisurf.URLGenerator.ip;
+import static android.R.attr.name;
+
+
 public class getSalt extends AppCompatActivity implements AsyncResponse{
 
     EditText med_name;
     Button btnsalt;
-    String ip = "172.30.102.171:8088/medisurf";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_salt);
+
+        Toolbar toolbar;
+        toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Drawer drawer= (Drawer) getSupportFragmentManager().findFragmentById(R.id.drawer_fragment);
+        drawer.setup(R.id.drawer_fragment, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
         med_name = (EditText)findViewById(R.id.med_name);
         btnsalt = (Button)findViewById(R.id.btnsalt);
@@ -81,13 +94,22 @@ public class getSalt extends AppCompatActivity implements AsyncResponse{
         try {
             if (jObj.getString("success").equals("1"))
             {
-                Toast.makeText(this, "Account created Successfully",
-                        Toast.LENGTH_LONG).show();
-                this.finish();
+
+                //Toast.makeText(this, "Account created Successfully",
+                  //      Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(this, Display_Salt.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("name","Salt");
+                i.putExtra("salt", jObj.getString("generic_salt"));
+                i.putExtra("desc" , jObj.getString("description"));
+                startActivity(i);
+//                this.finish();
             }
             else
             {
-                Toast.makeText(this, "Login Failed!!!",
+                Toast.makeText(this, "Connection Failed!",
                         Toast.LENGTH_LONG).show();
             }
         }
