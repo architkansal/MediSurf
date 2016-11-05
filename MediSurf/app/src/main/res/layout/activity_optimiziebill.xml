@@ -43,6 +43,12 @@
             android:layout_height="wrap_content"
             android:text="Add Medicine"
             android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+
             android:layout_below="@+id/ll"          />
 
             <Button
@@ -51,8 +57,23 @@
                 android:layout_height="wrap_content"
                 android:text="Optimize"
                 android:layout_below="@+id/btn"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
                  />
+            <ImageView
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="1dp"
+                android:background="#2b282e"
+                android:layout_below="@+id/btn1"
+                />
+
 
         </RelativeLayout>
     </ScrollView>
