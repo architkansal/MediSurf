@@ -41,6 +41,10 @@
         <activity android:name=".getAlternatives"
             android:label="Get Alternatives"></activity>
 
+        <activity android:name=".saltDescription"
+            android:label="About MediSurf"></activity>
+
+
     </application>
 
 </manifest>

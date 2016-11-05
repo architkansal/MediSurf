@@ -98,6 +98,9 @@ public class R_ViewAdapter extends RecyclerView.Adapter<R_ViewAdapter.R_ViewHold
                 } else if (type.equals("get generic name")) {
                     I = new Intent(item_context, getSalt.class);
                 }
+                else if (type.equals("about medisurf")) {
+                    I = new Intent(item_context, saltDescription.class);
+                }
 
 
                 item_context.startActivity(I);

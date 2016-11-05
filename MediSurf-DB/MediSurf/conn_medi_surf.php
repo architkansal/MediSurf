@@ -1,8 +1,8 @@
 <?php
-$servername = "mysql1.000webhost.com"; //replace it with your database server name
-$username = "a9929614_udhaar";  //replace it with your database username
-$password = "architanshul7";  //replace it with your database password
-$dbname = "a9929614_udhaar";
+$servername = "localhost"; //replace it with your database server name
+$username = "root";  //replace it with your database username
+$password = "";  //replace it with your database password
+$dbname = "medisurf";
 
 // Create connection
 
