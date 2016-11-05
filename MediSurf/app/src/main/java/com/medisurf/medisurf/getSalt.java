@@ -24,7 +24,7 @@ public class getSalt extends AppCompatActivity implements AsyncResponse{
 
     EditText med_name;
     Button btnsalt;
-    String ip = "172.30.102.171:8088/medisurf";
+    String ip = "172.30.112.144:8088/medisurf";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,7 @@ public class getSalt extends AppCompatActivity implements AsyncResponse{
                 i.putExtra("salt", jObj.getString("generic_salt"));
                 i.putExtra("desc" , jObj.getString("description"));
                 startActivity(i);
-                this.finish();
+//                this.finish();
             }
             else
             {

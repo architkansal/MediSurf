@@ -24,7 +24,7 @@
         <activity
             android:name=".getSalt"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
@@ -35,7 +35,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".GetBrands" />
         <activity android:name=".getAlternatives" />
-        <activity android:name=".Display_Salt"></activity>
+        <activity android:name=".Display_Salt" />
+        <activity android:name=".Display_Alternatives" />
+        <activity android:name=".Display_Brands"></activity>
     </application>
 
 </manifest>

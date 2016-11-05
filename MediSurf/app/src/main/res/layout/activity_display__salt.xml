@@ -10,29 +10,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.medisurf.medisurf.Display_Salt">
 
-    <EditText
+    <TextView
+        android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:layout_marginLeft="37dp"
-        android:layout_marginStart="37dp"
-        android:layout_marginTop="162dp"
-        android:id="@+id/salt_name"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="23dp"
+        android:id="@+id/salt_name" />
 
-    <EditText
+    <TextView
+        android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:layout_marginTop="51dp"
-        android:id="@+id/salt_description"
         android:layout_below="@+id/salt_name"
         android:layout_alignLeft="@+id/salt_name"
-        android:layout_alignStart="@+id/salt_name" />
+        android:layout_alignStart="@+id/salt_name"
+        android:layout_marginTop="44dp"
+        android:id="@+id/salt_description" />
+
 </RelativeLayout>
