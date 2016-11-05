@@ -14,39 +14,37 @@
         if($result==NULL || $res==NULL)
         {
             $response['success']=-1;
-            $response['generic_salt']="no med_name available in DB";
+            $response['brand_name']="no med_name available in DB";
             echo json_encode($response);
         }
         else
         {
-            $gs = $res['generic_salt'];
-            $des = $res['description'];
-            
-            $query = "Select * from medicine where generic_salt = '$gs' ";
-    
-            $result = @mysql_query($query , $conn);
-            // $res=@mysql_fetch_array($result);
-             // $res = $result->fetch_all(MYSQLI_NUM); 
-
-            $yourArray = array(); // make a new array to hold all your data
-
-            $index = 0;
-            while($row = mysql_fetch_assoc($result))
-            { // loop to store the data in an associative array.
-                 $yourArray[$index] = $row;
-                 $index++;
-            }
-            // print_r($yourArray);
-
             $response['success']=1;
-            $response['results']=$yourArray;
+            $response['brand_name'] = $res['brand_name'];
+            $response['description'] = $res['description'];
+            
+            // $query = "Select * from medicine where generic_salt = '$gs' ";
+    
+            // $result = @mysql_query($query , $conn);
+            // // $res=@mysql_fetch_array($result);
+            //  // $res = $result->fetch_all(MYSQLI_NUM); 
+
+            // $yourArray = array(); // make a new array to hold all your data
+
+            // $index = 0;
+            // while($row = mysql_fetch_assoc($result))
+            // { // loop to store the data in an associative array.
+            //      $yourArray[$index] = $row;
+            //      $index++;
+            // }
+            // // print_r($yourArray);
             echo json_encode($response);    
         }
     }
     else
     {
         $response['success']=0;
-        $response['generic_salt']="no med_name given";
+        $response['brand_name']="no med_name available in DB";
         echo json_encode($response);
     }
 

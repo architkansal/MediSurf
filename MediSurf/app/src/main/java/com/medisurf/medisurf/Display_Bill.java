@@ -48,10 +48,11 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
     float Prescribed_total;
     TextView ob;
     TextView pb;
-
+    HashMap postData = new HashMap();
     Button btnfeed;
     JSONArray org;
-    JSONArray finals = new JSONArray();
+    JSONObject orig = new JSONObject();
+    JSONObject finals = new JSONObject();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
             int count = 0;
             int k=0;
             org = jobj.getJSONArray("originals");
+//            orig = jobj.getJSONObject("originals");
             for(int i=1;i<jobj.length()-2;i++)
             {
                 JSONArray jo = jobj.getJSONArray(Integer.toString(count));
@@ -82,7 +84,7 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
                 String oname = org.getString(k); k++;
                 cnt.put(count,jo.length());
                 String oprice = org.getString(k); k++;
-
+                postData.put("originals"+Integer.toString(count),oname);
                 add_dynamic(oname,j1.getString("name"),oprice,j1.getString("price"));
                 count++;
             }
@@ -133,9 +135,6 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
                             {
                                 System.out.println(e);
                             }
-
-
-
                         }
                     }
                 }
@@ -147,32 +146,37 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
         btnfeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                int nn = 0;
                 if(isNetworkAvailable())
                 {
                     try {
 
                         for (int w = 0; w < txt.size(); w++) {
-                            finals.put(w, txt.get(w).toString());
+                            String str = (txt.get(w)).getText().toString();
+                            int z=0;
+                            while(str.charAt(z)!=':') z++;
+                            str = str.substring(z+1,str.length()-1);
+                            finals.put(Integer.toString(w),str);
+                            postData.put("finals"+Integer.toString(w),str);
+                            nn++;
                         }
 
                     }
-                    catch (Exception e)
-                    {
+                    catch (Exception e) {
                         System.out.println(e);
                     }
-                        HashMap postData = new HashMap();
 
                     postData.put("btnLogin", "Login");
                     postData.put("mobile", "android");
-                    postData.put("originals", org.toString());
-                    postData.put("finals", finals.toString());
+//                    postData.put("originals", orig.toString());
+//                    postData.put("finals", finals.toString());
                     postData.put("org_price", pb.getText());
                     postData.put("altered_price", ob.getText());
+                    postData.put("num" , Integer.toString(nn));
                     PostResponseAsyncTask loginTask =
                             new PostResponseAsyncTask(Display_Bill.this, postData);
                     System.out.println("Before Logging in");
-                    loginTask.execute("http://" + ip + "/GenericSalt.php");
+                    loginTask.execute("http://" + ip + "/saveStat.php");
                     System.out.println("After Logging in....");
 
                 }
@@ -210,14 +214,6 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
 
                 //Toast.makeText(this, "Account created Successfully",
                 //      Toast.LENGTH_LONG).show();
-
-                Intent i = new Intent(this, Display_Salt.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("name","Salt");
-                i.putExtra("salt", jObj.getString("generic_salt"));
-                i.putExtra("desc" , jObj.getString("description"));
-                startActivity(i);
 //                this.finish();
             }
             else
