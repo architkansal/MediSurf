@@ -90,8 +90,8 @@ public class GetBrands extends AppCompatActivity implements  AsyncResponse{
         try {
             if (jObj.getString("success").equals("1"))
             {
-                Toast.makeText(this, "Account created Successfully",
-                        Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Account created Successfully",
+                  //      Toast.LENGTH_LONG).show();
                 this.finish();
             }
             else

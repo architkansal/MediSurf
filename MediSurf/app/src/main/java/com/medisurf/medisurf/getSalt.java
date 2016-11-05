@@ -21,11 +21,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import static com.medisurf.medisurf.URLGenerator.ip;
+import static android.R.attr.name;
+
 
 public class getSalt extends AppCompatActivity implements AsyncResponse{
 
     EditText med_name;
     Button btnsalt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,13 +94,21 @@ public class getSalt extends AppCompatActivity implements AsyncResponse{
         try {
             if (jObj.getString("success").equals("1"))
             {
-                Toast.makeText(this, "Account created Successfully",
-                        Toast.LENGTH_LONG).show();
-                this.finish();
+
+                //Toast.makeText(this, "Account created Successfully",
+                  //      Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(this, Display_Salt.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("salt", jObj.getString("generic_salt"));
+                i.putExtra("desc" , jObj.getString("description"));
+                startActivity(i);
+//                this.finish();
             }
             else
             {
-                Toast.makeText(this, "Login Failed!!!",
+                Toast.makeText(this, "Connection Failed!",
                         Toast.LENGTH_LONG).show();
             }
         }

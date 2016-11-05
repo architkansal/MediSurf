@@ -5,5 +5,5 @@ package com.medisurf.medisurf;
  */
 
 public class URLGenerator {
-    public static String ip = "172.30.102.171:8088/medisurf";
+    public static String ip = "172.30.112.144:8088/medisurf";
 }
