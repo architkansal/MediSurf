@@ -1,6 +1,7 @@
 package com.medisurf.medisurf;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.widget.DrawerLayout;
@@ -88,11 +89,18 @@ public class getAlternatives extends AppCompatActivity  implements AsyncResponse
 
         try {
             if (jObj.getString("success").equals("1")) {
-                Toast.makeText(this, "Account created Successfully",
-                        Toast.LENGTH_LONG).show();
-                this.finish();
+                Intent i = new Intent(this, Display_Alternatives.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("name","Alternatives");
+                i.putExtra("results", jObj.getString("results"));
+//                i.putExtra("desc" , jObj.getString("description"));
+                startActivity(i);
+//                Toast.makeText(this, "Account created Successfully",
+//                        Toast.LENGTH_LONG).show();
+//                this.finish();
             } else {
-                Toast.makeText(this, "Login Failed!!!",
+                Toast.makeText(this, "Operation Failed!",
                         Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
