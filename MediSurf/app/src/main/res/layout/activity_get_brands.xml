@@ -30,14 +30,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="medicine name"
+        android:hint="enter medicine name"
         android:ems="10"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="47dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="61dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/medicine" />
 
     <Button
@@ -47,10 +47,21 @@
         android:layout_below="@+id/medicine"
         android:layout_alignLeft="@+id/medicine"
         android:layout_alignStart="@+id/medicine"
-        android:layout_marginLeft="29dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/btnbrand" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="#2b282e"
+                    android:layout_below="@+id/btnbrand"
+                    />
+
             </RelativeLayout>
         </ScrollView>
     </RelativeLayout>
