@@ -33,7 +33,7 @@
             android:name=".OptimizeBill"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        
+
 
         <activity android:name=".Display_Salt" />
         <activity android:name=".Display_Alternatives" />
