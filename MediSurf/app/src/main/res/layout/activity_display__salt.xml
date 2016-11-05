@@ -38,7 +38,8 @@
         android:layout_marginLeft="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="23dp"
-        android:id="@+id/salt_name" />
+        android:id="@+id/salt_name"
+            android:textSize="28dp"/>
 
     <TextView
         android:text="TextView"
@@ -48,7 +49,8 @@
         android:layout_alignLeft="@+id/salt_name"
         android:layout_alignStart="@+id/salt_name"
         android:layout_marginTop="44dp"
-        android:id="@+id/salt_description" />
+        android:id="@+id/salt_description"
+        android:textSize="28dp"/>
                 </RelativeLayout>
         </ScrollView>
 
