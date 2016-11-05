@@ -14,5 +14,7 @@ public class Display_Alternatives extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
     }
 }
