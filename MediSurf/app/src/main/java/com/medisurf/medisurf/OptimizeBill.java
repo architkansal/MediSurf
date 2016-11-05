@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -23,19 +25,28 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Vector;
 
+import static com.medisurf.medisurf.URLGenerator.ip;
+
 /**
  * Created by Anshul Goyal on 04-11-2016.
  */
 
 public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
 
-    String ip = "172.30.102.171:8088/medisurf";
     LinearLayout l1;
     Vector<EditText> v;
     int flag=0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_optimiziebill);
+
+        Toolbar toolbar;
+        toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Drawer drawer= (Drawer) getSupportFragmentManager().findFragmentById(R.id.drawer_fragment);
+        drawer.setup(R.id.drawer_fragment, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+
         v = new Vector<EditText>();
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
