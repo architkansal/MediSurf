@@ -159,7 +159,12 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
             {
                 //Toast.makeText(this, "Account created Successfully",
                   //      Toast.LENGTH_LONG).show();
-                
+                Intent i = new Intent(this, Display_Bill.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("data", jObj.toString());
+                startActivity(i);
+
             }
             else
             {
