@@ -27,7 +27,8 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".GetBrands" />
-        <activity android:name=".getAlternatives"></activity>
+        <activity android:name=".getAlternatives" />
+        <activity android:name=".saltDescription"></activity>
     </application>
 
 </manifest>

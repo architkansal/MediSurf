@@ -42,7 +42,7 @@ public class Home extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Intent intent = new Intent(this, getAlternatives.class);
+        Intent intent = new Intent(this, saltDescription.class);
         startActivity(intent);
         this.finish();
 
