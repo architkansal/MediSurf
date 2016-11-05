@@ -14,7 +14,66 @@
             layout="@layout/app_bar"
             android:id="@+id/app_toolbar" />
 
-</RelativeLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:fillViewport="false">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/my_id"
+                >
+
+                <TextView
+                    android:text="Total Savings So Far :"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="80dp"
+                    android:id="@+id/text_title"
+                    android:layout_alignParentTop="true"/>
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="23dp"
+                    android:id="@+id/text_number"
+                    android:layout_below="@id/text_title"/>
+
+                <TextView
+                    android:text="and counting..."
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="23dp"
+                    android:id="@+id/text_remaining"
+                    android:layout_below="@id/text_number"/>
+
+                <TextView
+                    android:text="Most Frequently Used Alternatives :"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="23dp"
+                    android:id="@+id/text_alternatives"
+                    android:layout_below="@id/text_remaining"/>
+
+
+                </RelativeLayout>
+            </ScrollView>
+
+    </RelativeLayout>
 
     <fragment
         android:id="@+id/drawer_fragment"

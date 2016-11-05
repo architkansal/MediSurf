@@ -122,7 +122,7 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
 //                                String oprice = org.getString(k); k++;
                                 String nm = j1.getString("name");
                                 String pz = j1.getString("price");
-                                ct.setText(nm);
+                                ct.setText("Alternative :"+nm);
                                 cp.setText(pz);
                                 JSONObject j2 = jo.getJSONObject(pcur);
                                 String pz2 = j2.getString("price");
