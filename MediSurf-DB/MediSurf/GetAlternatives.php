@@ -24,7 +24,7 @@
             // print($gs);
             // print("+++l3#############################################");
             $query = "Select * from medicine where generic_salt = '$gs' ;"; 
-            // print($query);
+            // print($query);   
             $result = @mysql_query($query , $conn);
             // $res=@mysql_fetch_array($result);
              // $res = $result->fetch_all(MYSQLI_NUM); 
