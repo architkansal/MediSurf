@@ -21,23 +21,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".getSalt"
+        <activity
+            android:name=".getSalt"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"> </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".OptimizeBill"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".GetBrands" />
-        <activity android:name=".getAlternatives"></activity>
-
+        <activity android:name=".getAlternatives" />
+        <activity android:name=".Display_Salt"></activity>
     </application>
 
 </manifest>
