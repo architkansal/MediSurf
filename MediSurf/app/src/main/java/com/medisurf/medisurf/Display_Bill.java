@@ -1,9 +1,15 @@
 package com.medisurf.medisurf;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.ExpandedMenuView;
+import android.util.Log;
+import android.view.View;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.View;
@@ -14,14 +20,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Vector;
 
-public class Display_Bill extends AppCompatActivity {
+import static com.medisurf.medisurf.URLGenerator.ip;
+
+public class Display_Bill extends AppCompatActivity implements AsyncResponse{
     String salt;
     String desc;
     Bundle extras;
@@ -38,6 +48,10 @@ public class Display_Bill extends AppCompatActivity {
     float Prescribed_total;
     TextView ob;
     TextView pb;
+
+    Button btnfeed;
+    JSONArray org;
+    JSONArray finals = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +72,7 @@ public class Display_Bill extends AppCompatActivity {
             jobj = new JSONObject(extras.getString("data"));
             int count = 0;
             int k=0;
-            JSONArray org = jobj.getJSONArray("originals");
+            org = jobj.getJSONArray("originals");
             for(int i=1;i<jobj.length()-2;i++)
             {
                 JSONArray jo = jobj.getJSONArray(Integer.toString(count));
@@ -127,7 +141,98 @@ public class Display_Bill extends AppCompatActivity {
                 }
             });
         }
+
+        btnfeed = (Button)findViewById(R.id.btnfeedback);
+
+        btnfeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isNetworkAvailable())
+                {
+                    try {
+
+                        for (int w = 0; w < txt.size(); w++) {
+                            finals.put(w, txt.get(w).toString());
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println(e);
+                    }
+                        HashMap postData = new HashMap();
+
+                    postData.put("btnLogin", "Login");
+                    postData.put("mobile", "android");
+                    postData.put("originals", org.toString());
+                    postData.put("finals", finals.toString());
+                    postData.put("org_price", pb.getText());
+                    postData.put("altered_price", ob.getText());
+                    PostResponseAsyncTask loginTask =
+                            new PostResponseAsyncTask(Display_Bill.this, postData);
+                    System.out.println("Before Logging in");
+                    loginTask.execute("http://" + ip + "/GenericSalt.php");
+                    System.out.println("After Logging in....");
+
+                }
+                else
+                {
+                    Context context = getApplicationContext();
+                    CharSequence text = "No network found. Try again later!";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+            }
+        });
+
     }
+
+
+    @Override
+    public void processFinish(String output) {
+        System.out.println(" o/p is : ");
+        System.out.println(output);
+        System.out.println("===================  " + output.toString() + "    =============");
+        JSONObject jObj= new JSONObject();
+        try {
+            jObj = new JSONObject(output.toString());
+        }
+        catch (JSONException e) {
+            Log.e("JSON Parser", "Error parsing data " + e.toString());
+        }
+
+        try {
+            if (jObj.getString("success").equals("1"))
+            {
+
+                //Toast.makeText(this, "Account created Successfully",
+                //      Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(this, Display_Salt.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("name","Salt");
+                i.putExtra("salt", jObj.getString("generic_salt"));
+                i.putExtra("desc" , jObj.getString("description"));
+                startActivity(i);
+//                this.finish();
+            }
+            else
+            {
+                Toast.makeText(this, "Connection Failed!",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public void add_dynamic(String med1,String med2,String p1,String p2)
     {
@@ -183,5 +288,12 @@ public class Display_Bill extends AppCompatActivity {
         iv.setBackgroundColor(Color.parseColor("#2b282e"));
         l.addView(iv,lp);
         l2.addView(l);
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
