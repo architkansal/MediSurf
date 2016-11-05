@@ -12,9 +12,8 @@
 
     <TextView
         android:text="TextView"
-        android:layout_height="500dp"
         android:id="@+id/txtview"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_width="300dp" />
+        android:layout_width="300dp"
+        android:layout_height="500dp" />
 </RelativeLayout>

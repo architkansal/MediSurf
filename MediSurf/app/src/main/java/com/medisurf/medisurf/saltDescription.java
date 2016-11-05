@@ -23,7 +23,13 @@ public class saltDescription extends AppCompatActivity {
                 " name rather than their generic salts. But there are many alternatives you can" +
                 " take because they contain the same generic salt. But changing the brand name might" +
                 " change the price drastically. Other features of app include getting generic salts, " +
-                "all brands for a particular medicine and all alternatives for a medicine etc." ;
+                "all brands for a particular medicine and all alternatives for a medicine etc."+
+                "" +
+                "" +
+                "DISCLAIMER : this app displays alternatives based on generic salts from the national drug databases." +
+                "users are requested to consult their doctor or any other professional beofore completely relying on" +
+                "the information provided .app developers are not responsible for any harm caused to the user based on " +
+                "the information available on the app" ;
         TextView tvName = (TextView)findViewById(R.id.txtview);
         tvName.setText(host_name);
     }
