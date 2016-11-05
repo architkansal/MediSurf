@@ -2,6 +2,7 @@ package com.medisurf.medisurf;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import org.json.JSONObject;
@@ -28,6 +29,5 @@ public class Display_Bill extends AppCompatActivity {
 
         // Render Data Now...
     }
-
 
 }
