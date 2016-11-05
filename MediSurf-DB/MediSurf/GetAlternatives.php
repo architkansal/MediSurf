@@ -2,7 +2,7 @@
     include_once("conn_medi_surf.php"); 
     mysql_select_db("medisurf")or die("cannot select DB");
     $response = array();
-    if( isset($_POST['med_name'] )
+    if( isset($_POST['med_name'] ))
     {
         $med_name = $_POST['med_name'];
     
@@ -21,14 +21,26 @@
         {
             $gs = $res['generic_salt'];
             $des = $res['description'];
-            
-            $query = "Select * from medicine where generic_salt = '$gs' "; 
-    
+            // print($gs);
+            // print("+++l3#############################################");
+            $query = "Select * from medicine where generic_salt = '$gs' ;"; 
+            // print($query);
             $result = @mysql_query($query , $conn);
-            $res=@mysql_fetch_array($result);
+            // $res=@mysql_fetch_array($result);
+             // $res = $result->fetch_all(MYSQLI_NUM); 
+
+            $yourArray = array(); // make a new array to hold all your data
+
+            $index = 0;
+            while($row = mysql_fetch_assoc($result))
+            { // loop to store the data in an associative array.
+                 $yourArray[$index] = $row;
+                 $index++;
+            }
+            // print_r($yourArray);
 
             $response['success']=1;
-            $response['results']=$res;
+            $response['results']=$yourArray;
             echo json_encode($response);
         }
     }
