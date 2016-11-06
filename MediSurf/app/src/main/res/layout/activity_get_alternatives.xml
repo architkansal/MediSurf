@@ -26,29 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <Button
-        android:text="submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/med"
-        android:layout_alignLeft="@+id/med"
-        android:layout_alignStart="@+id/med"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:id="@+id/btnalter" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/med"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:hint="Enter medicine name here "
-                    />
-
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -57,6 +34,30 @@
                     android:background="#2b282e"
                     android:layout_below="@+id/btnalter"
                     />
+
+                <EditText
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/med"
+                    android:hint="Enter medicine name here "
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="30sp"
+                     />
+
+                <Button
+                    android:text="submit"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnalter"
+                    android:layout_below="@+id/med"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/primarycolor"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="20sp"/>
 
             </RelativeLayout>
 </ScrollView>

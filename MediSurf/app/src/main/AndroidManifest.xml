@@ -29,7 +29,7 @@
             android:label="@string/title_activity_home" />
         <activity
             android:name=".OptimizeBill"
-            android:label="Optimize Bill" />
+            android:label="Customize Bill" />
         <activity
             android:name=".GetBrands"
             android:label="Get Brand" />

@@ -27,6 +27,6 @@ public class Display_Brands extends AppCompatActivity {
         salt_name  = (TextView) findViewById(R.id.brand_name);
         Desc = (TextView) findViewById(R.id.brand_desc);
         salt_name.setText(salt.toString());
-        Desc.setText(desc.toString());
+        Desc.setText("DESCRIPTION"+desc.toString());
     }
 }

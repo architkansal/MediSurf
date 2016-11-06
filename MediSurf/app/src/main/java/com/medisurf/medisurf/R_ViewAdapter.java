@@ -89,7 +89,7 @@ public class R_ViewAdapter extends RecyclerView.Adapter<R_ViewAdapter.R_ViewHold
                 String type = title.getText().toString().toLowerCase();
 
                 //System.out.println("ANSHUL GOYAL" + type);
-                if (type.equals("* optimize bill")) {
+                if (type.equals("* customize bill")) {
                     I = new Intent(item_context, OptimizeBill.class);
                 } else if (type.equals("* get alternatives")) {
                     I = new Intent(item_context, getAlternatives.class);

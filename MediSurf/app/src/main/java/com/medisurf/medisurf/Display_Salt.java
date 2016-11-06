@@ -37,7 +37,7 @@ public class Display_Salt extends AppCompatActivity {
         salt_name  = (TextView) findViewById(R.id.salt_name);
         Desc = (TextView) findViewById(R.id.salt_description);
         salt_name.setText(salt.toString());
-        Desc.setText(desc.toString());
+        Desc.setText("DESCRIPTION"+desc.toString());
     }
 
 }

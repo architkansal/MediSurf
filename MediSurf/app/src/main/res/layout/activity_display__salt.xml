@@ -30,27 +30,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-        <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="23dp"
-        android:id="@+id/salt_name"
-            android:textSize="28dp"/>
+                <TextView
+                    android:text="TextView"
+                    android:layout_marginLeft="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/salt_name"
+                    android:textSize="25dp"
+                    />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/salt_name"
-        android:layout_alignLeft="@+id/salt_name"
-        android:layout_alignStart="@+id/salt_name"
-        android:layout_marginTop="44dp"
-        android:id="@+id/salt_description"
-        android:textSize="28dp"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="#2b282e"
+                    android:layout_below="@+id/salt_name"
+                    android:id="@+id/line1"
+                    />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_marginLeft="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/line1"
+                    android:id="@+id/salt_description"
+                    android:layout_alignRight="@+id/salt_name"
+                    android:layout_alignEnd="@+id/salt_name"
+                    android:layout_marginTop="5sp"
+                    android:textSize="20dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="#2b282e"
+                    android:layout_below="@+id/salt_description"
+                    />
+
+
+
                 </RelativeLayout>
         </ScrollView>
 
