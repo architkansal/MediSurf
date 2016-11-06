@@ -88,17 +88,17 @@ public class R_ViewAdapter extends RecyclerView.Adapter<R_ViewAdapter.R_ViewHold
                 Intent I = null;
                 String type = title.getText().toString().toLowerCase();
 
-                System.out.println("ANSHUL GOYAL" + type);
-                if (type.equals("optimize bill")) {
+                //System.out.println("ANSHUL GOYAL" + type);
+                if (type.equals("* optimize bill")) {
                     I = new Intent(item_context, OptimizeBill.class);
-                } else if (type.equals("get alternatives")) {
+                } else if (type.equals("* get alternatives")) {
                     I = new Intent(item_context, getAlternatives.class);
-                } else if (type.equals("get brands")) {
+                } else if (type.equals("* get brands")) {
                     I = new Intent(item_context, GetBrands.class);
-                } else if (type.equals("get generic name")) {
+                } else if (type.equals("* get generic name")) {
                     I = new Intent(item_context, getSalt.class);
                 }
-                else if (type.equals("about medisurf")) {
+                else if (type.equals("* about medisurf")) {
                     I = new Intent(item_context, saltDescription.class);
                 }
 

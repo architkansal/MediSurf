@@ -8,7 +8,8 @@
     {   
        $org_price = $_POST['org_price'];
        $altered_price = $_POST['altered_price'];
-
+       $latitude = $_POST['latitude'];
+       $longitude = $_POST['longitude'];
         $query = "insert into price values ('$org_price', '$altered_price')"; 
         $result = @mysql_query($query , $conn);
         $k=0;
@@ -17,7 +18,7 @@
         {
             $pres = $_POST['originals'.($j)];
             $val = $_POST['finals'.($j)];
-            $query = "insert into alternatives values ('$pres', '$val')"; 
+            $query = "insert into alternatives  (original, alternative , latitude, longitude ) values ( '$pres', '$val', '$latitude' , '$longitude')"; 
             $result = @mysql_query($query , $conn);    
         }
        $data['success']=1;

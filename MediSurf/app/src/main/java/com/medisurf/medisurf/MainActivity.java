@@ -9,11 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,8 +39,26 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Drawer drawer= (Drawer) getSupportFragmentManager().findFragmentById(R.id.drawer_fragment);
         drawer.setup(R.id.drawer_fragment, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+
         counts = (TextView) (findViewById(R.id.text_number));
         counts.setText("11523");
+        LinearLayout l4 = (LinearLayout) findViewById(R.id.l4);
+        Display display = ((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int width = display.getWidth() / 2;
+        LinearLayout l = new LinearLayout(this);
+        l.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
+        TextView tv1 = new TextView(this);
+        TextView tv2 = new TextView(this);
+        tv1.setText("PRESCRIBED");
+        tv2.setText("ALTERNATIVE");
+        tv1.setGravity(Gravity.CENTER);
+        tv2.setGravity(Gravity.CENTER);
+        tv1.setTextSize(18);
+        tv2.setTextSize(18);
+        l.addView(tv1,lp);
+        l.addView(tv2, lp);
+        l4.addView(l);
         if(isNetworkAvailable()) {
 
             HashMap postData = new HashMap();
@@ -91,7 +114,31 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
             {
                 System.out.println(jObj.toString());
                 // anshul --->> print the klist of 5 most used original and alternative medicines, result is sorted already in descending order
+                JSONArray jarr = jObj.getJSONArray("results");
 
+                for(int i=0;i<jarr.length()&&i<5;i++)
+                {
+                    String orig = jarr.getJSONObject(i).getString("original");
+                    String alter = jarr.getJSONObject(i).getString("alternative");
+
+                    LinearLayout l4 = (LinearLayout) findViewById(R.id.l4);
+                    Display display = ((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+                    int width = display.getWidth() / 2;
+                    LinearLayout l = new LinearLayout(this);
+                    l.setOrientation(LinearLayout.HORIZONTAL);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    TextView tv1 = new TextView(this);
+                    TextView tv2 = new TextView(this);
+                    tv1.setText(orig);
+                    tv2.setText(alter);
+                    tv2.setGravity(Gravity.CENTER);
+                    tv1.setGravity(Gravity.CENTER);
+                    tv2.setTextSize(15);
+                    tv1.setTextSize(15);
+                    l.addView(tv1,lp);
+                    l.addView(tv2, lp);
+                    l4.addView(l);
+                }
             }
             else
             {

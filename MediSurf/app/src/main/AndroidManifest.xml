@@ -33,7 +33,7 @@
             android:label="Optimize Bill" />
         <activity
             android:name=".GetBrands"
-            android:label="Get Brands" />
+            android:label="Get Brand" />
         <activity
             android:name=".getAlternatives"
             android:label="Get Alternatives" />

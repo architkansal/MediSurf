@@ -36,6 +36,9 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
     LinearLayout l1;
     Vector<EditText> v;
     int flag=0;
+    String nou="1 ";
+    String mg="1 ";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_optimiziebill);
@@ -62,7 +65,8 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
                     EditText et1 = new EditText(view.getContext());
                     if(i==0) tv1.setText("Medicine Name : ");
                     else if(i==1) tv1.setText("No. of Units : ");
-                    else tv1.setText("mg/ml (Optional) : ");
+                    else tv1.setText("mg/ml : ");
+                    tv1.setTextSize(18);
                     l.addView(tv1,lp);
                     l.addView(et1, lp);
                     v.add(et1);
@@ -107,6 +111,9 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
                         String mn = "med_name"+Integer.toString(j);
                         String ut = "unit"+Integer.toString(j);
                         String mgml = "mg_ml"+Integer.toString(j);
+
+                        nou = nou + et_nou.getText().toString() +" ";
+                        mg = mg + et_mg.getText().toString() + " ";
 
                         postData.put(mn, ""+et_mn.getText().toString());
                         postData.put(ut, ""+et_nou.getText().toString());
@@ -163,6 +170,8 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("data", jObj.toString());
+                i.putExtra("nou",nou);
+                i.putExtra("mg_ml",mg);
                 startActivity(i);
 
             }
