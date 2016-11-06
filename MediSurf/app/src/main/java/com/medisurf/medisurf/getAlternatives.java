@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,11 +22,12 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import static com.medisurf.medisurf.OptimizeBill.medicines;
 import static com.medisurf.medisurf.R.id.med;
 import static com.medisurf.medisurf.URLGenerator.ip;
 
 public class getAlternatives extends AppCompatActivity  implements AsyncResponse {
-    EditText medc_name;
+    AutoCompleteTextView medc_name;
     Button btnalternative;
 
     @Override
@@ -40,8 +43,13 @@ public class getAlternatives extends AppCompatActivity  implements AsyncResponse
         Drawer drawer= (Drawer) getSupportFragmentManager().findFragmentById(R.id.drawer_fragment);
         drawer.setup(R.id.drawer_fragment, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
-        medc_name = (EditText) findViewById(med);
+        medc_name = (AutoCompleteTextView) findViewById(med);
         btnalternative = (Button) findViewById(R.id.btnalter);
+        ArrayAdapter adapter = new
+                ArrayAdapter(this,android.R.layout.simple_list_item_1,medicines);
+
+        medc_name.setAdapter(adapter);
+        medc_name.setThreshold(1);
 
         btnalternative.setOnClickListener(new View.OnClickListener() {
             @Override
