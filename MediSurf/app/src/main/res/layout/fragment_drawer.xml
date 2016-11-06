@@ -7,10 +7,27 @@
     tools:context="com.medisurf.medisurf.Drawer"
     android:elevation="7dp">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:src="@drawable/pic_draw"
+        android:layout_marginBottom="6dp"
+        android:id="@+id/pic2"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:id="@+id/r_view">
+        android:layout_height="wrap_content"
+        android:id="@+id/r_view"
+        android:layout_below="@+id/pic2">
 
     </android.support.v7.widget.RecyclerView>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#2b282e"
+        android:layout_below="@+id/r_view"
+        />
 </RelativeLayout>

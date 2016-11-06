@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.ExpandedMenuView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
@@ -117,10 +118,10 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
         ob = (TextView) findViewById(R.id.ob_total);
 
         String sf1 = String.format("%.2f",Prescribed_total);
-        pb.setText(sf1);
+        pb.setText("₹"+sf1);
 
         String sf2 = String.format("%.2f",Optimize_total);
-        ob.setText(sf2);
+        ob.setText("₹"+sf2);
 
         // Render Data Now...
 
@@ -146,11 +147,16 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
 //                                String oprice = org.getString(k); k++;
                                 String nm = j1.getString("name");
                                 String pz = j1.getString("price");
-                                ct.setText("Alternative :"+nm);
+                                ct.setText("Alternate: "+nm);
+                                ct.setTextSize(15);
+                                ct.setGravity(Gravity.CENTER);
                                 float f = Float.valueOf(pz)/Float.valueOf(j1.getString("mg_ml"));
                                 f = f * total_units.get(x);
                                 String sf1 = String.format("%.2f",f);
-                                cp.setText(sf1);
+                                cp.setText("₹"+sf1);
+                                cp.setTextSize(20);
+                                cp.setGravity(Gravity.CENTER);
+
                                 JSONObject j2 = jo.getJSONObject(pcur);
                                 String pz2 = j2.getString("price");
                                 float f1 = Float.valueOf(pz2)/Float.valueOf(j2.getString("mg_ml"));
@@ -158,7 +164,7 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
                                 Optimize_total = Optimize_total - f1 + f;
 
                                 String sof1 = String.format("%.2f",Optimize_total);
-                                ob.setText(String.valueOf(sof1));
+                                ob.setText("₹"+String.valueOf(sof1));
                             }
                             catch(Exception e)
                             {
@@ -270,16 +276,18 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
         TextView tv1 = new TextView(this);
         TextView tv2 = new TextView(this);
-        tv1.setText("Original :" +med1);
-
+        tv1.setText("Original : " +med1);
+        tv1.setTextSize(15);
+        tv1.setGravity(Gravity.CENTER);
         float f1 = Float.valueOf(p1)/Float.valueOf(mg1);
 
         f1 = f1 * total_units.get(count);
         System.out.println(f1);
         String sf1 = String.format("%.2f",f1);
 
-        tv2.setText(sf1);
-
+        tv2.setText("₹"+sf1);
+        tv2.setTextSize(20);
+        tv2.setGravity(Gravity.CENTER);
 
         Prescribed_total = Prescribed_total + f1;
 
@@ -288,31 +296,42 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse{
         l2.addView(l);
 
 
-        width = display.getWidth() / 3;
+        width = display.getWidth() / 2;
         l = new LinearLayout(this);
         l.setOrientation(LinearLayout.HORIZONTAL);
         lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
         TextView tv3 = new TextView(this);
         TextView tv4 = new TextView(this);
         tv3.setText("Alternative :"+med2);
+        tv3.setTextSize(15);
+        tv3.setGravity(Gravity.CENTER);
         float f2 = Float.valueOf(p2)/Float.valueOf(mg2);
         f2 = f2 * total_units.get(count);
         String sf2 = String.format("%.2f",f2);
-        tv4.setText(sf2);
+        tv4.setText("₹"+sf2);
+        tv4.setTextSize(20);
+        tv4.setGravity(Gravity.CENTER);
 
         Optimize_total = Optimize_total + f2;
 
-        Button b = new Button(this);
-        b.setText("Change");
-        b.setMinimumHeight(8);
-        l.addView(tv3,lp);
-        l.addView(tv4,lp);
-        l.addView(b,lp);
-        v.add(b);
+
         txt.add(tv3);
         prc.add(tv4);
+        l.addView(tv3,lp);
+        l.addView(tv4,lp);
         l2.addView(l);
 
+        width = display.getWidth() / 1;
+        l = new LinearLayout(this);
+        l.setOrientation(LinearLayout.HORIZONTAL);
+        lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
+        Button b = new Button(this);
+        b.setText("Another Alternative");
+        b.setMinimumHeight(8);
+        b.setGravity(Gravity.CENTER);
+        l.addView(b,lp);
+        v.add(b);
+        l2.addView(l);
 
         width = display.getWidth() / 1;
         l = new LinearLayout(this);

@@ -26,6 +26,7 @@
             else
             {
                 $gs = $res['generic_salt'];
+                $mgml = $res['mg_ml'];
                 $query = "Select * from medicine where generic_salt = '$gs' order by price asc";
                 $prc = $res['price'];
                 $result = @mysql_query($query , $conn);
@@ -40,6 +41,8 @@
                 $originals[$k]= $med;
                 $k++;    
                 $originals[$k]= $prc;
+                $k++;
+                $originals[$k]= $mgml;
                 $k++;
             }
         }

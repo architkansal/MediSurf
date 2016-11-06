@@ -66,6 +66,7 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
                     if(i==0) tv1.setText("Medicine Name : ");
                     else if(i==1) tv1.setText("No. of Units : ");
                     else tv1.setText("mg/ml : ");
+                    tv1.setTextSize(18);
                     l.addView(tv1,lp);
                     l.addView(et1, lp);
                     v.add(et1);
