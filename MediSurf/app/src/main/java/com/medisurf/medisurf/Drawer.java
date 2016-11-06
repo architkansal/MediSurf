@@ -51,7 +51,7 @@ public class Drawer extends Fragment {
 //        SharedPreferences prefs = this.getActivity().getSharedPreferences(Constants.APP_PREFERENCE, this.getActivity().MODE_PRIVATE);
 //        String restoredText = prefs.getString(Constants.isSignedIN, null);
 //=======
-        String[] titles={"* About MediSurf","* Customize Bill","* Get Alternatives","* Get Brands","* Get Generic Name"};
+        String[] titles={"* Home Page","* About MediSurf","* Customize Bill","* Get Alternatives","* Get Brands","* Get Generic Name"};
 
         for (int i=0;i<titles.length;i++){
             List_item current= new List_item();

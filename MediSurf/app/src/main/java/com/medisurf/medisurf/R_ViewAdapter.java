@@ -101,6 +101,9 @@ public class R_ViewAdapter extends RecyclerView.Adapter<R_ViewAdapter.R_ViewHold
                 else if (type.equals("* about medisurf")) {
                     I = new Intent(item_context, saltDescription.class);
                 }
+                else if (type.equals("* home page")) {
+                    I = new Intent(item_context, MainActivity.class);
+                }
 
 
                 item_context.startActivity(I);

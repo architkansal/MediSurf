@@ -24,32 +24,44 @@
         </activity>
         <activity
             android:name=".getSalt"
-            android:label="Get Generic Name"></activity>
+            android:label="Get Generic Name"
+            android:screenOrientation="portrait" ></activity>
         <activity
             android:name=".Home"
-            android:label="@string/title_activity_home" />
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".OptimizeBill"
-            android:label="Customize Bill" />
+            android:label="Customize Bill"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".GetBrands"
-            android:label="Get Brand" />
+            android:label="Get Brand"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".getAlternatives"
-            android:label="Get Alternatives" />
+            android:label="Get Alternatives"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".saltDescription"
-            android:label="About MediSurf" />
+            android:label="About MediSurf"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Display_Salt"
-            android:label="Generic Salt" />
+            android:label="Generic Salt"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Display_Alternatives"
-            android:label="Alternative Medicines" />
+            android:label="Alternative Medicines"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Display_Brands"
-            android:label="Brand Name" />
-        <activity android:name=".Display_Bill"></activity>
+            android:label="Brand Name"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".Display_Bill"
+            android:label="Customized Bill"
+            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

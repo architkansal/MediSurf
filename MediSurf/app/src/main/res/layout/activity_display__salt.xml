@@ -56,8 +56,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/line1"
                     android:id="@+id/salt_description"
-                    android:layout_alignRight="@+id/salt_name"
-                    android:layout_alignEnd="@+id/salt_name"
                     android:layout_marginTop="5sp"
                     android:textSize="20dp"/>
 
