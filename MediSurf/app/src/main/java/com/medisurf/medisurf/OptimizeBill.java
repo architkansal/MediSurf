@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,10 +36,11 @@ import static com.medisurf.medisurf.URLGenerator.ip;
 public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
 
     LinearLayout l1;
-    Vector<EditText> v;
+    Vector<AutoCompleteTextView> v;
     int flag=0;
     String nou="1 ";
     String mg="1 ";
+    public static String[] medicines={"Discorb","Acarex","Glubose","Liofen XL","Parafon","Spinofen","Defnom","Laza","Defzar","Triben-v","Clima forte","Camyda"};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +53,7 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
         Drawer drawer= (Drawer) getSupportFragmentManager().findFragmentById(R.id.drawer_fragment);
         drawer.setup(R.id.drawer_fragment, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
-        v = new Vector<EditText>();
+        v = new Vector<AutoCompleteTextView>();
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +65,7 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
                     l.setOrientation(LinearLayout.HORIZONTAL);
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
                     TextView tv1 = new TextView(view.getContext());
-                    EditText et1 = new EditText(view.getContext());
+                    AutoCompleteTextView et1 = new AutoCompleteTextView(view.getContext());
                     if(i==0) tv1.setText("Medicine Name : ");
                     else if(i==1) tv1.setText("No. of Units : ");
                     else tv1.setText("mg/ml : ");
@@ -70,6 +73,12 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
                     l.addView(tv1,lp);
                     l.addView(et1, lp);
                     v.add(et1);
+                    ArrayAdapter adapter = new
+                            ArrayAdapter(view.getContext(),android.R.layout.simple_list_item_1,medicines);
+
+                    et1.setAdapter(adapter);
+                    et1.setThreshold(1);
+
                     ll.addView(l);
                     if(i==2)
                     {
