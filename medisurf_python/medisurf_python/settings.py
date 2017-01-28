@@ -96,9 +96,11 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'tz_16',
+        'NAME': 'medisurf',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'password',
+        'PORT':'8000',
+        'HOST': 'localhost',
     }
 }
 
