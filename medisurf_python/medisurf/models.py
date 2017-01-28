@@ -18,7 +18,7 @@ class Medicine(models.Model):
 
 class Alternatives(models.Model):
 	original = models.CharField(max_length=200)
-	alernative = models.CharField(max_length=200)
+	alteredernative = models.CharField(max_length=200)
 	latitude = models.FloatField()
 	longitude = models.FloatField()
 	time = models.DateTimeField()

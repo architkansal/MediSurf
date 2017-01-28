@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 import requests
 import json
+import struct
 from medisurf.models import *
 # Create your views here.
 
@@ -24,22 +25,33 @@ def save_money(request):
 	return HttpResponse('')
 
 @csrf_exempt
-@api_view(['GET','POST'])
-def index(request):
-	return HttpResponse('Success')
-
-@csrf_exempt
 @api_view(['POST', 'GET'])
 def GenericSalt(request):
-	k = request.data['genericsalt']
-	print(k)
-	return HttpResponse("As")
+	med_name = request.data['med_name']
+	try:
+		all_med = Medicine.objects.get(medicine_name = med_name)
+		des = all_med.description
+		gen_salt = all_med.generic_salt
+
+	except Medicine.DoesNotExist:
+		return Response({'message':'Failure','success':2})
+
+	return Response({'message':'success', 'status':status.HTTP_200_OK, 'description': des, 'generic_salt':gen_salt, 'success':1})
 
 @csrf_exempt
 @api_view(['POST', 'GET'])
 def ShowBrands(request):
-	print(request.data)
-	return HttpResponse("sBadjls")
+
+	med_name = request.data['med_name']
+	try:
+		all_med = Medicine.objects.get(medicine_name = med_name)
+		des = all_med.description
+		brand_name = all_med.brand_name
+
+	except Medicine.DoesNotExist:
+		return Response({'message':'Failure','success':2})
+
+	return Response({'message':'success', 'status':status.HTTP_200_OK, 'description': des, 'brand_name':brand_name, 'success':1})
 
 @csrf_exempt
 @api_view(['POST', 'GET'])
@@ -56,30 +68,41 @@ def optimisebill(request):
 			gs = med_query.generic_salt
 			mgml = med_query.medicine_mg_ml
 			price = med_query.price
-			query = Medicine.objects.filter(generic_salt = gs)
+			query = Medicine.objects.raw("Select *, price/medicine_mg_ml as value from medisurf_medicine where generic_salt = %s order by value asc"% gs)
 			outer_arr = []
 			y = 0
+			confidence = Alternatives.objects.filter(original = med_name)
+			colen = confidence.count
+			#total original .. alternatives table
 			for i in query:
+				# this alternative count -- alternatives table
+				# add confidence field
 				arr = {}
 				arr['name'] = i.medicine_name
 				arr['generic_salt'] = i.generic_salt
 				arr['brand_name'] = i.brand_name
-				arr['price'] = i.price
+				arr['price'] = str(i.price)
 				arr['description'] = i.description
 				arr['type'] = i.medicine_type
+				arr['mg_ml'] = str(i.medicine_mg_ml)
 				outer_arr.append(arr)
+				c1 = confidence.filter(alternative = i.medicine_name)
+				c1len = c1.count
+				print(c1len)
 				y = y+1
 			originals.append(med_name)
 			q = q+1
-			originals.append(price)
+			originals.append(str(price))
 			q = q+1
-			originals.append(mgml)
+			originals.append(str(mgml))
 			q = q+1
-			resp[j] = outer_arr
+
+			resp[str(j)] = outer_arr
 		except Medicine.DoesNotExist:
 			resp[j] = "Medicine not in DB"
 	resp['originals'] = originals
 	resp['num'] = n
+	resp['success'] = 1
 	print(resp)	
 
 	return Response({'message':'Success','success':1, 'results':resp, 'status':status.HTTP_200_OK})
@@ -88,7 +111,6 @@ def optimisebill(request):
 @csrf_exempt
 @api_view(['POST', 'GET'])
 def savestat(request):
-	print(request.data)
 	return HttpResponse('sds')
 
 @csrf_exempt
@@ -116,3 +138,31 @@ def getbrands(request):				#req recieved
 	print(result)
 
 	return Response({'message':'Success', 'results': result, 'status': status.HTTP_200_OK})
+
+def address_generator(la,lo):
+	from geopy.geocoders import Nominatim
+	geolocator = Nominatim()
+	add = {}
+	arg = str(la) + "," + str(lo)
+	location = geolocator.reverse(arg)
+	d = location.raw
+	for key, value in d.iteritems():
+		if isinstance(value,dict):
+			add = value
+	if 'suburb' in add.keys():
+		print('')
+	else:
+		add['suburb'] = 'NA'
+	if 'state_district' in add.keys():
+		print('')
+	else:
+		add['state_district'] = 'NA'
+	if 'state' in add.keys():
+		print('')
+	else:
+		add['state'] = 'NA'
+	if 'country' in add.keys():
+		print('')
+	else:
+		add['country'] = 'NA'
+	return add['suburb'],add['state_district'],add['state'],add['country']
