@@ -18,4 +18,10 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     url(r'^home/',home),
+    url(r'^index/', index),
+    url(r'^genericsalt/', GenericSalt),
+    url(r'^showbrands/', ShowBrands),
+    url(r'^optimisebill/', optimisebill),
+    url(r'^savestat/', savestat),
+    url(r'^getbrands/', getbrands),
 ]
