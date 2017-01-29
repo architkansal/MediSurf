@@ -1,9 +1,16 @@
 package com.medisurf.medisurf;
 
-/**
- * Created by Anshul Goyal on 05-11-2016.
- */
 
 public class URLGenerator {
-    public static String ip = "128.199.132.222";
+//    public static String ip = "128.199.132.222";
+    public static final String ip = "http://172.30.112.240:8000/";
+    public static final String index = "ms/index/";
+    public static final String genericsalt = "ms/genericsalt/";
+    public static final String showbrands = "ms/showbrands/";
+    public static final String getbrands = "ms/getbrands/";
+    public static final String optimisebill = "ms/optimisebill/";
+    public static final String savestat = "ms/savestat/";
+    static String getUrl(final String URLFor){
+        return ip + URLFor;
+    }
 }

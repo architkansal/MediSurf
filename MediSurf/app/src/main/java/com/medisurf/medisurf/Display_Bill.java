@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Vector;
+import java.util.regex.Matcher;
 
 import static com.medisurf.medisurf.URLGenerator.ip;
 
@@ -65,6 +67,10 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
     JSONObject orig = new JSONObject();
     JSONObject finals = new JSONObject();
     GoogleApiClient mGoogleApiClient;
+    static Display_Bill mInstance;
+    public static synchronized Display_Bill getmInstance(){
+        return  mInstance;
+    }
 
     @Override
     protected void onStart() {
@@ -113,7 +119,7 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
         toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        mInstance = this;
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -138,22 +144,19 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
         for(int i=1;i<nou.length;i++)
         {
             total_units.add(Integer.valueOf(nou[i])*Integer.valueOf(mg[i]));
-            //System.out.println("hello sumit : " + nou[i]);
         }
-
-        //for(int i=0;i<total_units.size();i++) System.out.println("Bye"+total_units);
-
         try {
             jobj = new JSONObject(extras.getString("data"));
             int count = 0;
             int k=0;
             org = jobj.getJSONArray("originals");
-//            orig = jobj.getJSONObject("originals");
+            System.out.println(org);
             for(int i=1;i<jobj.length()-2;i++)
             {
                 JSONArray jo = jobj.getJSONArray(Integer.toString(count));
-
+                System.out.println(jo);
                 JSONObject j1 =jo.getJSONObject(0);
+                System.out.println(j1);
                 hm.put(count,0);
                 String oname = org.getString(k); k++;
                 cnt.put(count,jo.length());
@@ -248,7 +251,6 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
                             postData.put("finals"+Integer.toString(w),str);
                             nn++;
                         }
-
                     }
                     catch (Exception e) {
                         System.out.println(e);
@@ -258,16 +260,28 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
                     postData.put("mobile", "android");
 //                    postData.put("originals", orig.toString());
 //                    postData.put("finals", finals.toString());
-                    postData.put("org_price", pb.getText().toString().replace('₹',' '));
+                    String str1 =  pb.getText().toString().replace('₹',' ');
+                    str1.trim();
+                    float f1 = Float.valueOf(str1);
+                    int i1 = Math.round(f1);
+                    postData.put("org_price",i1);
                     postData.put("latitude", latitude);
                     postData.put("longitude", longitude);
-                    postData.put("altered_price", ob.getText().toString().replace('₹',' '));
+                    String str2 =  pb.getText().toString().replace('₹',' ');
+                    str2.trim();
+                    float f2 = Float.valueOf(str1);
+                    int i2 = Math.round(f1);
+                    postData.put("altered_price",i2);
                     postData.put("num" , Integer.toString(nn));
-                    PostResponseAsyncTask loginTask =
-                            new PostResponseAsyncTask(Display_Bill.this, postData);
-                    System.out.println("Before Logging in");
-                    loginTask.execute("http://" + ip + "/saveStat.php");
-                    System.out.println("After Logging in....");
+                    System.out.println("Post" +postData);
+                    Intent i = new Intent(Display_Bill.this, Popup_final.class);
+                    startActivity(i);
+                    NetworkRequests.savestat(postData);
+//                    PostResponseAsyncTask loginTask =
+//                            new PostResponseAsyncTask(Display_Bill.this, postData);
+//                    System.out.println("Before Logging in");
+//                    loginTask.execute("http://" + ip + "/saveStat.php");
+//                    System.out.println("After Logging in....");
 
                 }
                 else
@@ -407,5 +421,9 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public void onDataReturn() {
+
     }
 }
