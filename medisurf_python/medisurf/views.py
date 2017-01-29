@@ -23,7 +23,21 @@ def home(request):
 	print count
 
 	alt = Alternatives.objects.raw('SELECT * from alternatives group by original order by original,alternative DESC LIMIT 10')
+	for a in alt:
+		age = int(a.age_grp)
+		# print age
+		if(age <= 15):
+			a.age_grp = "1-15"
+		elif(age > 15 and age <=25):
+			a.age_grp = "15-25"
+		elif(age>25 and age <=40):
+			a.age_grp = "25-40"
+		elif(age>40 and age<=60):
+			a.age_grp = "40-60"
+		elif(age>60):
+			a.age_grp = "60 and above"
 	response['tab']=alt;
+	print alt[0].age_grp
 	# response = {}
 	response['count'] = count
 	return render(request,'medisurf/home.html',response)
