@@ -18,10 +18,10 @@ class Medicine(models.Model):
 
 class Alternatives(models.Model):
 	original = models.CharField(max_length=200)
-	alteredernative = models.CharField(max_length=200)
+	alternative = models.CharField(max_length=200)
 	latitude = models.FloatField()
 	longitude = models.FloatField()
-	time = models.DateTimeField()
+	time = models.DateTimeField(auto_now_add=True)
 
 	def __unicode__(self):
 		return self.original + " "+ self.alernative

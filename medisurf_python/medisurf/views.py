@@ -9,6 +9,8 @@ from rest_framework.response import Response
 import requests
 import json
 import struct
+import random
+import sys, traceback
 from medisurf.models import *
 # Create your views here.
 
@@ -111,7 +113,43 @@ def optimisebill(request):
 @csrf_exempt
 @api_view(['POST', 'GET'])
 def savestat(request):
-	return HttpResponse('sds')
+
+	print(request.data)
+	org_price = int(request.data['org_price'])
+	altered_price = int(request.data['altered_price'])
+	lat = request.data['latitude']
+	longitude = request.data['longitude']
+	price = Prices()
+	price.original = int(org_price)
+	price.altered = int(altered_price)
+	price.save()
+	k = 0
+	i = int(request.data['num'])
+	print(i)
+	try:
+		for j in range(0,i):
+			pres = request.data['originals'+str(j)]
+			val = request.data['finals'+str(j)]
+			alt = Alternatives()
+			alt.latitude = str(lat)
+			alt.longitude = str(longitude)
+			alt.original = pres
+			alt.alternative = val
+			suburb, district, state, country = address_generator(lat,longitude)
+			alt.suburb = suburb
+			alt.district = district
+			alt.state = state
+			alt.country = country
+			alt.age = str(10)
+			if j%2 == 0:
+				alt.sex = "male"
+			else:
+				alt.sex = "female"
+			alt.save()
+	except :
+		traceback.print_exc(file=sys.stdout)
+
+	return Response({'message':'Success', 'status':status.HTTP_200_OK})
 
 @csrf_exempt
 @api_view(['POST', 'GET'])
