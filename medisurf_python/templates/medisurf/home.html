@@ -24,28 +24,10 @@
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
-      function drawChart() {
+      function drawChart(dat) {
 
         // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
 
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
       }
     </script>
 </head>
@@ -68,6 +50,7 @@
 		                <th>Alternative</th>
 		                <th>Age-Group</th>
 		                <th>Gender</th>
+		                <th>District</th>
 		                <th>State</th>
 		                <th>Country</th>
 		            </tr>
@@ -79,6 +62,7 @@
 	        			<td>{{t.alternative}}</td>
 	        			<td>{{t.age_grp}}</td>
 	        			<td>{{t.sex}}</td>
+	        			<td>{{t.district}}</td>
 	        			<td>{{t.state}}</td>
 	        			<td>{{t.country}}</td>
 		        	</tr>
@@ -90,7 +74,7 @@
 	<br>
 	<div class="row">
 		<hr>
-		<div class="col-md-6">
+		<div class="col-md-10">
 			<h5>Medicines Statistics</h5>
 			<label>Age</label>
 			<select class="browser-default" id="age" label="Age">
@@ -152,10 +136,11 @@
 			</select>
 			{% csrf_token %}
 			<a class="waves-effect waves-light btn" id="submit" onclick="sub()">button</a>
+			<div id="chart_div"></div>
 		</div>
     <!--Div that will hold the pie chart-->
     <!-- <div id="chart_div"></div> -->
-    <div class="col-md-6">
+    <div class="col-md-10">
     	<h5>Purchases Statistics</h5>
     	<label>Age</label>
 		<select class="browser-default" id="age1">
@@ -214,6 +199,7 @@
 		</select>
 		{% csrf_token %}
 		<a class="waves-effect waves-light btn" id="submit1" onclick="sub1()">button</a>
+		<div id="chart_div1"></div>
 		</div>
 <hr/>
 </div>
@@ -232,6 +218,8 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#example').DataTable();
+		$("#chart_div").hide();
+		$("#chart_div1").hide();
 	} );
 
 	function sub()
@@ -240,6 +228,8 @@
 	}
 
 	$("#Country").change(function(){
+		$("#chart_div").hide();
+		// $("#chart_div1").hide();
 		var country =$('#Country').val();
 		$.ajax({
 			url:'/ms/select_state',
@@ -261,6 +251,8 @@
 	});
 
 	$("#State").change(function(){
+		$("#chart_div").hide();
+		// $("#chart_div1").hide();
 		// alert("fsdf");
 		var state =$('#State').val();
 		$.ajax({
@@ -283,6 +275,8 @@
 	});
 
 	$("#District").change(function(){
+		$("#chart_div").hide();
+		// $("#chart_div1").hide();
 		var district =$('#District').val();
 		$.ajax({
 			url:'/ms/select_sub',
@@ -304,6 +298,8 @@
 	});
 
 $("#Country1").change(function(){
+				// $("#chart_div").hide();
+		$("#chart_div1").hide();
 		var country =$('#Country1').val();
 		$.ajax({
 			url:'/ms/select_state',
@@ -325,6 +321,8 @@ $("#Country1").change(function(){
 	});
 
 	$("#State1").change(function(){
+				// $("#chart_div").hide();
+		$("#chart_div1").hide();
 		// alert("fsdf");
 		var state =$('#State1').val();
 		$.ajax({
@@ -347,6 +345,8 @@ $("#Country1").change(function(){
 	});
 
 	$("#District1").change(function(){
+				// $("#chart_div").hide();
+		$("#chart_div1").hide();
 		var district =$('#District1').val();
 		$.ajax({
 			url:'/ms/select_sub',
@@ -385,8 +385,35 @@ $("#Country1").change(function(){
 			success:function(data)
 			{
 				//build pie-chart
-				alert("Okay");
-			}
+				// alert("Okay");
+				console.log(data);
+				var total = data.total;
+				console.log(data.qdata)
+				// drawChart(data.qdata);
+				dat=data.qdata;
+				var dat_len=Object.keys(data.qdata).length;
+				console.log(dat);
+				var data = new google.visualization.DataTable();
+		        data.addColumn('string', 'Generic_Saly');
+		        data.addColumn('number', 'Frequency');
+		        console.log("length :" + dat_len)
+				data.addRows(dat_len);
+				var i=0;
+				for (var key in dat) {
+					data.setCell(i,0,key);
+				    data.setCell(i,1,dat[key]);
+				    i++;  
+				}
+		        // Set chart options
+		        var options = {'title':'Data Fetched',
+		                       'width':400,
+		                       'height':300};
+
+		        // Instantiate and draw our chart, passing in some options.
+		        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+		        chart.draw(data, options);
+					$("#chart_div").show();
+				}
 		})
 	}
 
@@ -407,7 +434,30 @@ $("#Country1").change(function(){
 			success:function(data)
 			{
 				//build pie-chart
-				alert("Okay1");
+				// alert("Okay1");
+				dat=data.qdata;
+				var dat_len=Object.keys(data.qdata).length;
+				console.log(dat);
+				var data = new google.visualization.DataTable();
+		        data.addColumn('string', 'Generic_Saly');
+		        data.addColumn('number', 'Frequency');
+		        console.log("length :" + dat_len)
+				data.addRows(dat_len);
+				var i=0;
+				for (var key in dat) {
+					data.setCell(i,0,key);
+				    data.setCell(i,1,dat[key]);
+				    i++;  
+				}
+		        // Set chart options
+		        var options = {'title':'Data Fetched',
+		                       'width':400,
+		                       'height':300};
+
+		        // Instantiate and draw our chart, passing in some options.
+		        var chart = new google.visualization.PieChart(document.getElementById('chart_div1'));
+		        chart.draw(data, options);
+					$("#chart_div1").show();
 			}
 		})
 	}
