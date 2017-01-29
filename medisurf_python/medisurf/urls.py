@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^save_me/',save_money),
     url(r'^region_usage/',region_usage),
     url(r'^usage_stat',usage_stats),
+    url(r'^purchase_stats',purchase_stats),
     url(r'^foo',foo),
     url(r'^select_state',select_state),
     url(r'^select_dis',select_dis),
