@@ -22,7 +22,12 @@ class Alternatives(models.Model):
 	latitude = models.FloatField()
 	longitude = models.FloatField()
 	time = models.DateTimeField()
-
+	sex = models.CharField(default="",max_length=2)
+	age_grp=models.CharField(default="",max_length=20)
+	suburb = models.CharField(default="",max_length=200)
+	district = models.CharField(default="",max_length=200)
+	state = models.CharField(default="",max_length=200)
+	country=models.CharField(default="",max_length=200)
 	def __unicode__(self):
 		return self.original + " "+ self.alernative
 

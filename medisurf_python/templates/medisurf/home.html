@@ -1,0 +1,134 @@
+
+{% load staticfiles %}
+<div ng-app="usage_stat" ng-controller="usage">
+
+<!-- Count:{{count}} -->
+
+<!-- 	<form action="/medisurf/" method = 'POST'> -->
+		<select id="age">
+			<option id="-1" value="all">All</option>
+			<option id="1-15">1-15</option>
+			<option id="15-25">15-25</option>
+			<option id="25-40">25-40</option>
+			<option id="40-60">40-60</option>
+			<option id="60-above">60 and above</option>
+		</select>
+		<select id="sex">
+			<option id="-1" value="all">All</option>
+			<option id="M">Male</option>
+			<option id="F">Female</option>
+		</select>
+
+		<select id="month">
+			<option id="-1" value="all">All</option>
+			<option id="Jan">Jan</option>
+			<option id="Feb">Feb</option>
+			<option id="Mar">Mar</option>
+			<option id="Apr">Apr</option>
+			<option id="May">May</option>
+			<option id="June">June</option>
+			<option id="July">July</option>
+			<option id="Aug">Aug</option>
+			<option id="Sep">Sep</option>
+			<option id="Oct">Oct</option>
+			<option id="Nov">Nov</option>
+			<option id="Dec">Dec</option>
+		</select>
+		<select id="Country" ng-model="country" ng-change="select_state()">
+			<option id="-1" value="all">All</option>
+			{% for x in loc %}
+			<option id="{{x}}" value="{{x}}">
+			{{x}}
+			</option>
+			{% endfor %}
+		</select>
+		<select id="State">
+			<option id="-1" value="all">All</option>
+			<option ng-repeat="data in state" value="{{data}}">
+				{{data}}
+			</option>
+		</select>
+		<select id="District">
+			<option id="-1" value="all">All</option>
+			<option ng-repeat="district">
+				{{district.loc}}
+			</option>
+		</select>
+		<select id="Suburb">
+			<option id="-1" value="all">All</option>
+			<option ng-repeat="suburb">
+				{{suburb.loc}}
+			</option>
+		</select>
+		<button id="submit">Submit</button>
+	<!-- </form> -->
+</div>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script> -->
+  <script src="{% static 'angular.min.js' %}"></script>
+<script type="text/javascript">
+	var app = angular.module('usage_stat',[]);
+	app.controller("usage",function($scope,$http)
+	{
+		$scope.foo=function foo()
+		{
+			console.log("Hello");
+			$http({ 
+					method:'POST',
+					url:'/ms/foo',
+					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+					transformRequest: function(obj) {
+						var str = [];
+						for(var p in obj)
+							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+						return str.join("&");
+					},
+					data:{
+						'name':'Vinay',
+						'csrfmiddlewaretoken': '{{ csrf_token }}',
+
+					}
+				})
+				.then(function (data, status) {
+					console.log(data);
+				})
+				.error(function (data,status) {
+
+				});
+		}
+
+		$scope.select_state = function()
+		{
+			$http({ 
+					method:'POST',
+					url:'/ms/select_param',
+					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+					transformRequest: function(obj) {
+						var str = [];
+						for(var p in obj)
+							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+						return str.join("&");
+					},
+					data:{
+						'param':$scope.country,
+						'inp':'country',
+						'inp2':'state',
+						'csrfmiddlewaretoken': '{{ csrf_token }}',
+
+					}
+				})
+				.then(function (data, status) {
+					// console.log("Hello");
+					console.log(data);
+					// for(var i=0;i<17;i++)
+					// {
+					// 	console.log(data[i].dat);
+					// }
+					$scope.state=data.data.dat;
+				})
+				.error(function (data,status) {
+
+				});
+			console.log($scope.country);
+		}
+	});
+</script>
