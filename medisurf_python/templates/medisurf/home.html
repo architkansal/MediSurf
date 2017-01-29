@@ -1,11 +1,164 @@
-
 {% load staticfiles %}
-<div ng-app="usage_stat" ng-controller="usage">
+<link rel="stylesheet" type="text/css" href="{% static 'jquery.dataTables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'jquery.dataTables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'materialize/css/materialize.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'materialize/css/materialize.min.css' %}">
 
-<!-- Count:{{count}} -->
-
+<link rel="stylesheet" type="text/css" href="cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
 <!-- 	<form action="/medisurf/" method = 'POST'> -->
-		<select id="age">
+<html>
+  <head>
+  	<title>MediSurf Analytics Dashboard</title>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 3],
+          ['Onions', 1],
+          ['Olives', 1],
+          ['Zucchini', 1],
+          ['Pepperoni', 2]
+        ]);
+
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+</head>
+	<body>
+<div class="container">
+	<h3 align="center"><b>MediSurf Analytics Dashboard</b></h3>
+	<br>
+	<div class="row">
+		<h4>Total Savings : <u><i>{{count}}</i></u> and counting...</h4>
+		<hr>
+	</div>
+	<div class="row">
+		<h4>Usage-Statistics</h4>
+		<hr>
+		<div class="col-md-10">
+			<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+		        <thead>
+		            <tr>
+		                <th>Prescription</th>
+		                <th>Alternative</th>
+		                <th>Age-Group</th>
+		                <th>Gender</th>
+		                <th>State</th>
+		                <th>Country</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		        	{% for t in tab %}
+		        	<tr>
+	        			<td>{{t.original}}</td>
+	        			<td>{{t.alternative}}</td>
+	        			<td>{{t.age_grp}}</td>
+	        			<td>{{t.sex}}</td>
+	        			<td>{{t.state}}</td>
+	        			<td>{{t.country}}</td>
+		        	</tr>
+		        	{% endfor %}
+		        </tbody>
+		   	</table>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<hr>
+		<div class="col-md-6">
+			<h5>Medicines Statistics</h5>
+			<label>Age</label>
+			<select class="browser-default" id="age" label="Age">
+				<option id="-1" value="all">All</option>
+				<option id="1-15">1-15</option>
+				<option id="15-25">15-25</option>
+				<option id="25-40">25-40</option>
+				<option id="40-60">40-60</option>
+				<option id="60-above">60 and above</option>
+			</select>
+
+			<label>Age-Group</label>
+			<select class="browser-default" id="sex">
+				<option id="-1" value="all">All</option>
+				<option id="M">Male</option>
+				<option id="F">Female</option>
+			</select>
+
+			<label>Month</label>
+			<select class="browser-default" id="month">
+				<option id="-1" value="all">All</option>
+				<option id="Jan">Jan</option>
+				<option id="Feb">Feb</option>
+				<option id="Mar">Mar</option>
+				<option id="Apr">Apr</option>
+				<option id="May">May</option>
+				<option id="June">June</option>
+				<option id="July">July</option>
+				<option id="Aug">Aug</option>
+				<option id="Sep">Sep</option>
+				<option id="Oct">Oct</option>
+				<option id="Nov">Nov</option>
+				<option id="Dec">Dec</option>
+			</select>
+
+			<label>Country</label>
+			<select class="browser-default" id="Country">
+				<option id="-1" value="all">All</option>
+				{% for x in loc %}
+				<option id="{{x}}" value="{{x}}">
+				{{x}}
+				</option>
+				{% endfor %}
+			</select>
+
+			<label>State</label>
+			<select class="browser-default" id="State">
+				<option id="-1" value="all">All</option>
+			</select>
+
+			<label>District</label>
+			<select class="browser-default" id="District">
+				<option id="-1" value="all">All</option>
+			</select>
+
+			<label>Suburb</label>
+			<select class="browser-default" id="Suburb">
+				<option id="-1" value="all">All</option>
+			</select>
+			{% csrf_token %}
+			<a class="waves-effect waves-light btn" id="submit" onclick="sub()">button</a>
+		</div>
+    <!--Div that will hold the pie chart-->
+    <!-- <div id="chart_div"></div> -->
+    <div class="col-md-6">
+    	<h5>Purchases Statistics</h5>
+    	<label>Age</label>
+		<select class="browser-default" id="age1">
 			<option id="-1" value="all">All</option>
 			<option id="1-15">1-15</option>
 			<option id="15-25">15-25</option>
@@ -13,13 +166,15 @@
 			<option id="40-60">40-60</option>
 			<option id="60-above">60 and above</option>
 		</select>
-		<select id="sex">
+		<label>Age-Group</label>
+		<select class="browser-default" id="sex1">
 			<option id="-1" value="all">All</option>
 			<option id="M">Male</option>
 			<option id="F">Female</option>
 		</select>
 
-		<select id="month">
+		<label>Month</label>
+		<select class="browser-default" id="month1">
 			<option id="-1" value="all">All</option>
 			<option id="Jan">Jan</option>
 			<option id="Feb">Feb</option>
@@ -34,7 +189,9 @@
 			<option id="Nov">Nov</option>
 			<option id="Dec">Dec</option>
 		</select>
-		<select id="Country" ng-model="country" ng-change="select_state()">
+
+		<label>Country</label>
+		<select class="browser-default" id="Country1">
 			<option id="-1" value="all">All</option>
 			{% for x in loc %}
 			<option id="{{x}}" value="{{x}}">
@@ -42,93 +199,217 @@
 			</option>
 			{% endfor %}
 		</select>
-		<select id="State">
+
+		<label>State</label>
+		<select class="browser-default" id="State1">
 			<option id="-1" value="all">All</option>
-			<option ng-repeat="data in state" value="{{data}}">
-				{{data}}
-			</option>
 		</select>
-		<select id="District">
+		<label>District</label>
+		<select class="browser-default" id="District1">
 			<option id="-1" value="all">All</option>
-			<option ng-repeat="district">
-				{{district.loc}}
-			</option>
 		</select>
-		<select id="Suburb">
+		<label>Suburb</label>
+		<select class="browser-default" id="Suburb1">
 			<option id="-1" value="all">All</option>
-			<option ng-repeat="suburb">
-				{{suburb.loc}}
-			</option>
 		</select>
-		<button id="submit">Submit</button>
-	<!-- </form> -->
+		{% csrf_token %}
+		<a class="waves-effect waves-light btn" id="submit1" onclick="sub1()">button</a>
+		</div>
+<hr/>
 </div>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script> -->
-  <script src="{% static 'angular.min.js' %}"></script>
+  </body>
+</html>
+
+<script src="cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
+<script src="{% static 'jquery.min.js' %}"></script>
+<script src="{% static 'jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'jquery.dataTables.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'materialize/js/materialize.js' %}"></script>
+<script src="{% static 'materialize/js/materialize.js' %}"></script>
+
 <script type="text/javascript">
-	var app = angular.module('usage_stat',[]);
-	app.controller("usage",function($scope,$http)
+	$(document).ready(function() {
+		$('#example').DataTable();
+	} );
+
+	function sub()
 	{
-		$scope.foo=function foo()
-		{
-			console.log("Hello");
-			$http({ 
-					method:'POST',
-					url:'/ms/foo',
-					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-					transformRequest: function(obj) {
-						var str = [];
-						for(var p in obj)
-							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-						return str.join("&");
-					},
-					data:{
-						'name':'Vinay',
-						'csrfmiddlewaretoken': '{{ csrf_token }}',
+		alert("Hello");
+	}
 
-					}
-				})
-				.then(function (data, status) {
-					console.log(data);
-				})
-				.error(function (data,status) {
-
-				});
-		}
-
-		$scope.select_state = function()
-		{
-			$http({ 
-					method:'POST',
-					url:'/ms/select_param',
-					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-					transformRequest: function(obj) {
-						var str = [];
-						for(var p in obj)
-							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-						return str.join("&");
-					},
-					data:{
-						'param':$scope.country,
-						'inp':'country',
-						'inp2':'state',
-						'csrfmiddlewaretoken': '{{ csrf_token }}',
-
-					}
-				})
-				.then(function (data, status) {
-					// console.log("Hello");
-					console.log(data);
-					// for(var i=0;i<17;i++)
-					// {
-					// 	console.log(data[i].dat);
-					// }
-					$scope.state=data.data.dat;
-				})
-				.error(function (data,status) {
-
-				});
-			console.log($scope.country);
-		}
+	$("#Country").change(function(){
+		var country =$('#Country').val();
+		$.ajax({
+			url:'/ms/select_state',
+			type:'post',
+			data:{
+				'param':country,
+				csrfmiddlewaretoken: '{{ csrf_token }}',
+			},
+			success:function(data)
+			{
+				console.log(data);
+				$("#State").html("<option id=-1 value='all'>All</option>");
+				for(x in data.dat)
+				{
+					$('#State').append("<option id="+data.dat[x]+">"+data.dat[x]+"</option>");
+				}
+			}
+		});
 	});
+
+	$("#State").change(function(){
+		// alert("fsdf");
+		var state =$('#State').val();
+		$.ajax({
+			url:'/ms/select_dis',
+			type:'post',
+			data:{
+				'param':state,
+				csrfmiddlewaretoken: '{{ csrf_token }}',
+			},
+			success:function(data)
+			{
+				$("#District").html("<option id=-1 value='all'>All</option>");
+				console.log(data);
+				for(x in data.dat)
+				{
+					$('#District').append("<option id="+data.dat[x]+">"+data.dat[x]+"</option>");
+				}
+			}
+		});
+	});
+
+	$("#District").change(function(){
+		var district =$('#District').val();
+		$.ajax({
+			url:'/ms/select_sub',
+			type:'post',
+			data:{
+				'param':district,
+				csrfmiddlewaretoken: '{{ csrf_token }}',
+			},
+			success:function(data)
+			{
+				$("#Suburb").html("<option id=-1 value='all'>All</option>");
+				console.log(data);
+				for(x in data.dat)
+				{
+					$('#Suburb').append("<option id="+data.dat[x]+">"+data.dat[x]+"</option>");
+				}
+			}
+		});
+	});
+
+$("#Country1").change(function(){
+		var country =$('#Country1').val();
+		$.ajax({
+			url:'/ms/select_state',
+			type:'post',
+			data:{
+				'param':country,
+				csrfmiddlewaretoken: '{{ csrf_token }}',
+			},
+			success:function(data)
+			{
+				console.log(data);
+				$("#State1").html("<option id=-1 value='all'>All</option>");
+				for(x in data.dat)
+				{
+					$('#State1').append("<option id="+data.dat[x]+">"+data.dat[x]+"</option>");
+				}
+			}
+		});
+	});
+
+	$("#State1").change(function(){
+		// alert("fsdf");
+		var state =$('#State1').val();
+		$.ajax({
+			url:'/ms/select_dis',
+			type:'post',
+			data:{
+				'param':state,
+				csrfmiddlewaretoken: '{{ csrf_token }}',
+			},
+			success:function(data)
+			{
+				console.log(data);
+				$("#District1").html("<option id=-1 value='all'>All</option>");
+				for(x in data.dat)
+				{
+					$('#District1').append("<option id="+data.dat[x]+">"+data.dat[x]+"</option>");
+				}
+			}
+		});
+	});
+
+	$("#District1").change(function(){
+		var district =$('#District1').val();
+		$.ajax({
+			url:'/ms/select_sub',
+			type:'post',
+			data:{
+				'param':district,
+				csrfmiddlewaretoken: '{{ csrf_token }}',
+			},
+			success:function(data)
+			{
+				console.log(data);
+				$("#Suburb1").html("<option id=-1 value='all'>All</option>");
+				for(x in data.dat)
+				{
+					$('#Suburb1').append("<option id="+data.dat[x]+">"+data.dat[x]+"</option>");
+				}
+			}
+		});
+	});
+
+	function sub(){
+		alert($("#State").val());
+		$.ajax({
+			url:'/ms/usage_stat',
+			type:'post',
+			data:{
+				'age_grp':$("#age").val(),
+				'sex':$("#sex").val(),
+				'month':$("#month").val(),
+				'Country':$("#Country").val(),
+				'State':$("#State").val(),
+				'District':$("#District").val(),
+				'Suburb':$("#Suburb").val(),
+				csrfmiddlewaretoken:'{{ csrf_token }}'
+			},
+			success:function(data)
+			{
+				//build pie-chart
+				alert("Okay");
+			}
+		})
+	}
+
+	function sub1(){
+		$.ajax({
+			url:'/ms/purchase_stat',
+			type:'post',
+			data:{
+				'age_grp1':$("#age1").val(),
+				'sex1':$("#sex1").val(),
+				'month1':$("#month1").val(),
+				'Country1':$("#Country1").val(),
+				'State1':$("#State1").val(),
+				'District1':$("#District1").val(),
+				'Suburb1':$("#Suburb1").val(),
+				csrfmiddlewaretoken:'{{ csrf_token }}'
+			},
+			success:function(data)
+			{
+				//build pie-chart
+				alert("Okay1");
+			}
+		})
+	}
+
 </script>
