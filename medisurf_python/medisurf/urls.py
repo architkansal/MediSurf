@@ -26,4 +26,9 @@ urlpatterns = [
     url(r'^select_state',select_state),
     url(r'^select_dis',select_dis),
     url(r'^select_sub',select_sub),
+    url(r'^genericsalt/', GenericSalt),
+    url(r'^showbrands/', ShowBrands),
+    url(r'^optimisebill/', optimisebill),
+    url(r'^savestat/', savestat),
+    url(r'^getbrands/', getbrands),
 ]

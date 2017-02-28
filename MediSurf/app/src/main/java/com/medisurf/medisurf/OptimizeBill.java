@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,8 +35,9 @@ import static com.medisurf.medisurf.URLGenerator.ip;
  * Created by Anshul Goyal on 04-11-2016.
  */
 
-public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
+public class OptimizeBill extends AppCompatActivity{
 
+    static OptimizeBill mInstance;
     LinearLayout l1;
     Vector<AutoCompleteTextView> v;
     int flag=0;
@@ -42,10 +45,14 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
     String mg="1 ";
     public static String[] medicines={"Discorb","Acarex","Glubose","Liofen XL","Parafon","Spinofen","Defnom","Laza","Defzar","Triben-v","Clima forte","Camyda"};
 
+    public static synchronized OptimizeBill getInstance(){
+        return mInstance;
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_optimiziebill);
-
+        mInstance = this;
         Toolbar toolbar;
         toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
@@ -57,104 +64,98 @@ public class OptimizeBill extends AppCompatActivity implements AsyncResponse{
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int i=0;i<3;i++) {
-                    LinearLayout ll = (LinearLayout) findViewById(R.id.ll);
-                    Display display = ((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-                    int width = display.getWidth() / 2;
-                    LinearLayout l = new LinearLayout(view.getContext());
+            for(int i=0;i<3;i++) {
+                LinearLayout ll = (LinearLayout) findViewById(R.id.ll);
+                Display display = ((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+                int width = display.getWidth() / 2;
+                LinearLayout l = new LinearLayout(view.getContext());
+                l.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
+                TextView tv1 = new TextView(view.getContext());
+                AutoCompleteTextView et1 = new AutoCompleteTextView(view.getContext());
+                if(i==0) tv1.setText("Medicine Name : ");
+                else if(i==1) tv1.setText("No. of Units : ");
+                else tv1.setText("mg/ml : ");
+                tv1.setTextSize(18);
+                l.addView(tv1,lp);
+                l.addView(et1, lp);
+                v.add(et1);
+                ArrayAdapter adapter = new
+                        ArrayAdapter(view.getContext(),android.R.layout.simple_list_item_1,medicines);
+
+                et1.setAdapter(adapter);
+                et1.setThreshold(1);
+
+                ll.addView(l);
+                if(i==2)
+                {
+                    l1 = (LinearLayout) findViewById(R.id.ll);
+                    display = ((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+                    width = display.getWidth() / 1;
+                    l = new LinearLayout(view.getContext());
                     l.setOrientation(LinearLayout.HORIZONTAL);
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    TextView tv1 = new TextView(view.getContext());
-                    AutoCompleteTextView et1 = new AutoCompleteTextView(view.getContext());
-                    if(i==0) tv1.setText("Medicine Name : ");
-                    else if(i==1) tv1.setText("No. of Units : ");
-                    else tv1.setText("mg/ml : ");
-                    tv1.setTextSize(18);
-                    l.addView(tv1,lp);
-                    l.addView(et1, lp);
-                    v.add(et1);
-                    ArrayAdapter adapter = new
-                            ArrayAdapter(view.getContext(),android.R.layout.simple_list_item_1,medicines);
-
-                    et1.setAdapter(adapter);
-                    et1.setThreshold(1);
-
-                    ll.addView(l);
-                    if(i==2)
-                    {
-                        l1 = (LinearLayout) findViewById(R.id.ll);
-                        display = ((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-                        width = display.getWidth() / 1;
-                        l = new LinearLayout(view.getContext());
-                        l.setOrientation(LinearLayout.HORIZONTAL);
-                        lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
-                                ImageView iv = new ImageView(view.getContext());
-                        iv.setMinimumHeight(2);
-                        iv.layout(0,5,0,5);
-                        iv.setBackgroundColor(Color.parseColor("#2b282e"));
-                        l.addView(iv,lp);
-                        l1.addView(l);
-                    }
-
+                    lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            ImageView iv = new ImageView(view.getContext());
+                    iv.setMinimumHeight(2);
+                    iv.layout(0,5,0,5);
+                    iv.setBackgroundColor(Color.parseColor("#2b282e"));
+                    l.addView(iv,lp);
+                    l1.addView(l);
                 }
             }
+            }
         });
-
-
-
 
         findViewById(R.id.btn1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isNetworkAvailable()) {
-                    HashMap postData = new HashMap();
-                    int j=0;
-                    for (int i = 0; i < v.size(); i++) {
+            if (isNetworkAvailable()) {
+                HashMap postData = new HashMap();
+                int j=0;
+                String mn = null,ut = null,mgml = null;
+                for (int i = 0; i < v.size(); i++) {
+                    EditText et_mn = v.get(i);
+                    i++;
+                    EditText et_nou = v.get(i);
+                    i++;
+                    EditText et_mg = v.get(i);
+                    mn = "med_name"+Integer.toString(j);
+                    ut = "unit"+Integer.toString(j);
+                    mgml = "mg_ml"+Integer.toString(j);
 
-                        EditText et_mn = v.get(i);
-                        i++;
-                        EditText et_nou = v.get(i);
-                        i++;
-                        EditText et_mg = v.get(i);
+                    nou = nou + et_nou.getText().toString() +" ";
+                    mg = mg + et_mg.getText().toString() + " ";
 
-                        String mn = "med_name"+Integer.toString(j);
-                        String ut = "unit"+Integer.toString(j);
-                        String mgml = "mg_ml"+Integer.toString(j);
-
-                        nou = nou + et_nou.getText().toString() +" ";
-                        mg = mg + et_mg.getText().toString() + " ";
-
-                        postData.put(mn, ""+et_mn.getText().toString());
-                        postData.put(ut, ""+et_nou.getText().toString());
-                        postData.put(mgml , ""+et_mg.getText().toString());
-
-                        j++;
-
-                    }
-                    System.out.println("HELLLOOOO   " + postData);
-                    postData.put("total_med",Integer.toString(j));
-
-                    PostResponseAsyncTask loginTask =
-                            new PostResponseAsyncTask(OptimizeBill.this, postData);
-                    System.out.println("Before Logging in");
-                    loginTask.execute("http://" + ip + "/OptimiseBill.php");
-                    System.out.println("After Logging in....");
+                    postData.put(mn, ""+et_mn.getText().toString());
+                    postData.put(ut, ""+et_nou.getText().toString());
+                    postData.put(mgml , ""+et_mg.getText().toString());
+                    j++;
                 }
+                postData.put("total_med",Integer.toString(j));
+                String total_med = Integer.toString(j);
+                NetworkRequests.optimisebill(postData);
 
-                else {
-                    Context context = getApplicationContext();
-                    CharSequence text = "No network found. Try again later!";
-                    int duration = Toast.LENGTH_SHORT;
+//                PostResponseAsyncTask loginTask =
+//                        new PostResponseAsyncTask(OptimizeBill.this, postData);
+//                System.out.println("Before Logging in");
+//                loginTask.execute("http://" + ip + "/OptimiseBill.php");
+//                System.out.println("After Logging in....");
+            }
 
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
+            else {
+                Context context = getApplicationContext();
+                CharSequence text = "No network found. Try again later!";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
 
             }
         });
     }
 
-    @Override
+
     public void processFinish(String output) {
         System.out.println(" o/p is : ");
         System.out.println(output);

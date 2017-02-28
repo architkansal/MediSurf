@@ -25,7 +25,7 @@ SECRET_KEY = 'zt2&3g+-sm0#-=aq$yg=x(b11ksr=-vj@(ol9vj0l#k_%4_edm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -87,23 +87,23 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'medisurf',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'PORT':'8000',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql', 
+#         'NAME': 'medisurf',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'PORT':'8000',
+#         'HOST': 'localhost',
+#     }
+# }
 
 
 # Password validation

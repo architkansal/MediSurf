@@ -28,17 +28,22 @@ import static com.medisurf.medisurf.URLGenerator.ip;
 import static android.R.attr.name;
 
 
-public class getSalt extends AppCompatActivity implements AsyncResponse{
+public class getSalt extends AppCompatActivity{
 
     AutoCompleteTextView med_name;
     Button btnsalt;
+    String medicine_name;
+    static getSalt mInstance;
 
+    public static synchronized getSalt getInstance(){
+        return mInstance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_salt);
-
+        mInstance = this;
         Toolbar toolbar;
         toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
@@ -57,41 +62,31 @@ public class getSalt extends AppCompatActivity implements AsyncResponse{
         btnsalt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(isNetworkAvailable()) {
-
+                    medicine_name = med_name.getText().toString();
+                    NetworkRequests.genericsalt(medicine_name);
                     HashMap postData = new HashMap();
-                    postData.put("btnLogin", "Login");
-                    postData.put("mobile", "android");
-                    postData.put("med_name", med_name.getText().toString());
-                    System.out.println(med_name.getText().toString());
-                    PostResponseAsyncTask loginTask =
-                            new PostResponseAsyncTask(getSalt.this, postData);
-                    System.out.println("Before Logging in");
-                    loginTask.execute("http://" + ip + "/GenericSalt.php");
-                    System.out.println("After Logging in....");
-
+//                    postData.put("med_name", );
+//                    System.out.println(med_name.getText().toString());
+//                    PostResponseAsyncTask loginTask =
+//                            new PostResponseAsyncTask(getSalt.this, postData);
+//                    loginTask.execute("http://" + ip + "/GenericSalt.php");
+//                    System.out.println("After Logging in....");
                 }
                 else
                 {
                     Context context = getApplicationContext();
                     CharSequence text = "No network found. Try again later!";
                     int duration = Toast.LENGTH_SHORT;
-
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
             }
         });
-
     }
 
 
-    @Override
     public void processFinish(String output) {
-        System.out.println(" o/p is : ");
-        System.out.println(output);
-        System.out.println("===================  " + output.toString() + "    =============");
         JSONObject jObj= new JSONObject();
         try {
             jObj = new JSONObject(output.toString());
@@ -99,14 +94,9 @@ public class getSalt extends AppCompatActivity implements AsyncResponse{
         catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
-
         try {
             if (jObj.getString("success").equals("1"))
             {
-
-                //Toast.makeText(this, "Account created Successfully",
-                  //      Toast.LENGTH_LONG).show();
-
                 Intent i = new Intent(this, Display_Salt.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

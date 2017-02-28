@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,18 +23,25 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import static com.medisurf.medisurf.OptimizeBill.medicines;
+import static com.medisurf.medisurf.URLGenerator.getbrands;
 import static com.medisurf.medisurf.URLGenerator.ip;
 
-public class GetBrands extends AppCompatActivity implements  AsyncResponse{
+public class GetBrands extends AppCompatActivity{
 
     AutoCompleteTextView med_name;
     Button btnbrand;
+    String medicine_name;
+    private static GetBrands mInstance;
+
+    public static synchronized GetBrands getInstance(){
+        return mInstance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_brands);
-
+        mInstance = this;
         Toolbar toolbar;
         toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
@@ -57,15 +65,14 @@ public class GetBrands extends AppCompatActivity implements  AsyncResponse{
                 if(isNetworkAvailable()) {
 
                     HashMap postData = new HashMap();
-                    postData.put("btnLogin", "Login");
-                    postData.put("mobile", "android");
-                    postData.put("med_name", med_name.getText().toString());
-                    System.out.println(med_name.getText().toString());
-                    PostResponseAsyncTask loginTask =
-                            new PostResponseAsyncTask(GetBrands.this, postData);
-                    System.out.println("Before Logging in");
-                    loginTask.execute("http://" + ip + "/ShowBrands.php");
-                    System.out.println("After Logging in....");
+
+                    medicine_name = med_name.getText().toString();
+//                    PostResponseAsyncTask loginTask =
+//                            new PostResponseAsyncTask(GetBrands.getInstance() , postData);
+                    NetworkRequests.showbrands(medicine_name);
+//                    System.out.println("Before Logging in");
+//                    loginTask.execute("http://" + ip + "/ShowBrands.php");
+//                    System.out.println("After Logging in....");
 
                 }
                 else
@@ -79,12 +86,8 @@ public class GetBrands extends AppCompatActivity implements  AsyncResponse{
                 }
             }
         });
-
-
     }
 
-
-    @Override
     public void processFinish(String output) {
         System.out.println(" o/p is : ");
         System.out.println(output);
@@ -123,7 +126,6 @@ public class GetBrands extends AppCompatActivity implements  AsyncResponse{
         }
 
     }
-
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager

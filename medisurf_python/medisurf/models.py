@@ -18,10 +18,9 @@ class Medicine(models.Model):
 
 class Alternatives(models.Model):
 	original = models.CharField(max_length=200)
-	alernative = models.CharField(max_length=200)
+	alternative = models.CharField(max_length=200)
 	latitude = models.FloatField()
 	longitude = models.FloatField()
-	time = models.DateTimeField()
 	sex = models.CharField(default="",max_length=2)
 	age_grp=models.CharField(default="",max_length=20)
 	suburb = models.CharField(default="",max_length=200)

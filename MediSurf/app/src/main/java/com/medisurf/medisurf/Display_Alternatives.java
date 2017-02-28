@@ -1,6 +1,7 @@
 package com.medisurf.medisurf;
 
 import android.content.Context;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -54,26 +55,25 @@ public class Display_Alternatives extends AppCompatActivity {
         l.addView(tv2,lp);
         l.addView(tv3,lp);
         l.addView(tv4,lp);
-        //l.addView(tv2,lp);
         l3.addView(l);
 
         try {
-            jarr = new JSONArray(results);
+            JSONObject jarr = new JSONObject(results);
+//            jarr = new JSONArray(results);
             for(int i=0;i<jarr.length();i++)
             {
-                String mn = jarr.getJSONObject(i).getString("name");
-                String bn = jarr.getJSONObject(i).getString("brand_name");
-                String pr = jarr.getJSONObject(i).getString("price");
-                String mg = jarr.getJSONObject(i).getString("mg_ml");
+                String is = new Integer(i).toString();
+                String mn = jarr.getJSONObject(is).getString("name");
+                String bn = jarr.getJSONObject(is).getString("brand_name");
+                String pr = jarr.getJSONObject(is).getString("price");
+                String mg = jarr.getJSONObject(is).getString("mg_ml");
                 add_dynamic(mn,bn,pr,mg);
             }
         }
         catch(Exception e)
         {
-
+            e.printStackTrace();
         }
-
-        //System.out.println("ppppppppppppppppppppppppppppppppppppp"+results);
     }
 
     public void add_dynamic(String med,String bn,String pr,String mg)
@@ -101,8 +101,6 @@ public class Display_Alternatives extends AppCompatActivity {
         l.addView(tv2,lp);
         l.addView(tv3,lp);
         l.addView(tv4,lp);
-        //l.addView(v2,lp);
         l3.addView(l);
     }
-
 }
