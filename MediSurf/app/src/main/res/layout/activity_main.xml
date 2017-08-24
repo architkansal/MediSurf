@@ -15,19 +15,12 @@
             layout="@layout/app_bar"
             android:id="@+id/app_toolbar" />
 
-        <android.support.v7.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/app_name"
-            android:layout_below="@+id/app_toolbar"
-            android:layout_marginTop="20sp"
-            android:layout_marginBottom="20sp"
-            android:id="@+id/app_name"/>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/app_name"
+            android:layout_below="@+id/app_toolbar"
             >
 
             <View
@@ -39,6 +32,13 @@
                 android:alpha="0.4">
             </View>
 
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/name"
+                android:layout_marginTop="20sp"
+                android:layout_marginBottom="20sp"
+                android:id="@+id/app_name"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -47,6 +47,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_below="@+id/app_name"
             >
 
             <RelativeLayout
