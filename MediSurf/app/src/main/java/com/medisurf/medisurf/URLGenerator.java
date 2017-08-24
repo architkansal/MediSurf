@@ -3,7 +3,7 @@ package com.medisurf.medisurf;
 
 public class URLGenerator {
 //    public static String ip = "128.199.132.222";
-    public static final String ip = "http://172.30.112.240:8000/";
+    public static final String ip = "http://192.168.111.108:8000/";
     public static final String index = "ms/index/";
     public static final String genericsalt = "ms/genericsalt/";
     public static final String showbrands = "ms/showbrands/";

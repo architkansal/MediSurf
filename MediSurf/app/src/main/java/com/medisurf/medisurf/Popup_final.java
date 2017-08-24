@@ -10,10 +10,16 @@ import android.widget.EditText;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 /**
  * Created by Kiran Konduru on 1/29/2017.
  */
 public class Popup_final extends AppCompatActivity {
+
+    HashMap postData = new HashMap();
+    String age;
+    String gender;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,15 +31,22 @@ public class Popup_final extends AppCompatActivity {
         int height = dm.heightPixels;
 
         getWindow().setLayout((int)(width*0.8),(int)(height*0.5));
-        EditText e1 = (EditText) findViewById(R.id.pop_age);
-        EditText e2 = (EditText) findViewById(R.id.pop_gender);
 
-        String gender = e2.getText().toString();
-        String age = e1.getText().toString();
+        Intent intent = getIntent();
+        postData = (HashMap<String,String>)intent.getSerializableExtra("map");
 
         findViewById(R.id.submit_Price).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EditText e1 = (EditText) findViewById(R.id.pop_age);
+                EditText e2 = (EditText) findViewById(R.id.pop_gender);
+                gender = e2.getText().toString();
+                age = e1.getText().toString();
+                if(gender.equals("male")) gender = "M";
+                else gender  = "F";
+                postData.put("gender",gender);
+                postData.put("age",age);
+                NetworkRequests.savestat(postData);
                 finish();
             }
         });

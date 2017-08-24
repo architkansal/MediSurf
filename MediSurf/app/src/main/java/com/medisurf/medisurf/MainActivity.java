@@ -29,11 +29,19 @@ import java.util.HashMap;
 
 import static com.medisurf.medisurf.URLGenerator.ip;
 
-public class MainActivity extends AppCompatActivity implements AsyncResponse{
+public class MainActivity extends AppCompatActivity {
     TextView counts;
+    static MainActivity mInstance;
+
+    public static synchronized MainActivity getInstance(){
+        return mInstance;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mInstance = this;
+        NetworkRequests.Home();
         setContentView(R.layout.activity_main);
         Toolbar toolbar;
         toolbar = (Toolbar) findViewById(R.id.app_toolbar);
@@ -61,64 +69,50 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
         l.addView(tv1,lp);
         l.addView(tv2, lp);
         l4.addView(l);
-        if(isNetworkAvailable()) {
-
-            HashMap postData = new HashMap();
-            postData.put("btnLogin", "Login");
-            postData.put("mobile", "android");
-            PostResponseAsyncTask loginTask =
-                    new PostResponseAsyncTask(MainActivity.this, postData);
-            System.out.println("Before Logging in");
-            loginTask.execute("http://" + ip + "/get_count.php");
-            System.out.println("After Logging in....");
-
-            HashMap postData2 = new HashMap();
-            postData.put("btnLogin", "Login");
-            postData.put("mobile", "android");
-            PostResponseAsyncTask loginTask2 =
-                    new PostResponseAsyncTask(MainActivity.this, postData);
-            System.out.println("Before Logging in");
-            loginTask2.execute("http://" + ip + "/most_frequent.php");
-            System.out.println("After Logging in....");
-
-        }
-        else
-        {
-            Context context = getApplicationContext();
-            CharSequence text = "No network found. Try again later!";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
+//        if(isNetworkAvailable()) {
+//
+//            HashMap postData = new HashMap();
+//            postData.put("btnLogin", "Login");
+//            postData.put("mobile", "android");
+//            PostResponseAsyncTask loginTask =
+//                    new PostResponseAsyncTask(MainActivity.this, postData);
+//            System.out.println("Before Logging in");
+//            loginTask.execute("http://" + ip + "/get_count.php");
+//            System.out.println("After Logging in....");
+//
+//            HashMap postData2 = new HashMap();
+//            postData.put("btnLogin", "Login");
+//            postData.put("mobile", "android");
+//            PostResponseAsyncTask loginTask2 =
+//                    new PostResponseAsyncTask(MainActivity.this, postData);
+//            System.out.println("Before Logging in");
+//            loginTask2.execute("http://" + ip + "/most_frequent.php");
+//            System.out.println("After Logging in....");
+//
+//        }
+//        else
+//        {
+//            Context context = getApplicationContext();
+//            CharSequence text = "No network found. Try again later!";
+//            int duration = Toast.LENGTH_SHORT;
+//
+//            Toast toast = Toast.makeText(context, text, duration);
+//            toast.show();
+//        }
 
     }
 
-    @Override
-    public void processFinish(String output) {
-        System.out.println(" o/p is : ");
-        System.out.println(output);
-        System.out.println("===================  " + output.toString() + "    =============");
-        JSONObject jObj= new JSONObject();
-        try {
-            jObj = new JSONObject(output.toString());
-        }
-        catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
-        }
+    public void processFinish(JSONObject jObj) {
 
         try {
             if (jObj.getString("success").equals("1"))
             {
                 counts.setText(jObj.getString("count").toString());
-            }
-            else if(jObj.getString("success").equals("2"))
-            {
-                System.out.println(jObj.toString());
-                // anshul --->> print the klist of 5 most used original and alternative medicines, result is sorted already in descending order
                 JSONArray jarr = jObj.getJSONArray("results");
 
-                for(int i=0;i<jarr.length()&&i<5;i++)
+                System.out.println("FUCKOFFFFFF "+jarr);
+
+                for(int i=0;i<jarr.length();i++)
                 {
                     String orig = jarr.getJSONObject(i).getString("original");
                     String alter = jarr.getJSONObject(i).getString("alternative");

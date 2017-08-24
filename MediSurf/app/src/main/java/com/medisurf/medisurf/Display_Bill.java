@@ -2,6 +2,7 @@ package com.medisurf.medisurf;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -9,6 +10,8 @@ import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.ExpandedMenuView;
@@ -43,6 +46,7 @@ import static com.medisurf.medisurf.URLGenerator.ip;
 
 public class Display_Bill extends AppCompatActivity implements AsyncResponse, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
     private static final String TAG = Display_Bill.class.getSimpleName();
+    private static final int MY_PERMISSION_ACCESS_COURSE_LOCATION = 12;
     String latitude;
     String longitude;
     String salt;
@@ -94,6 +98,11 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
 
     }
     public void onConnected(@Nullable Bundle bundle) {
+        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+
+            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },
+                    Display_Bill.MY_PERMISSION_ACCESS_COURSE_LOCATION );
+        }
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
             Log.e(TAG, "onConnected: " + String.valueOf(mLastLocation.getLatitude()) + ":" + String.valueOf(mLastLocation.getLongitude()));
@@ -263,26 +272,21 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
                     String str1 =  pb.getText().toString().replace('₹',' ');
                     str1.trim();
                     float f1 = Float.valueOf(str1);
-                    int i1 = Math.round(f1);
-                    postData.put("org_price",i1);
+//                    int i1 = Math.round(f1);
+                    postData.put("org_price",f1);
                     postData.put("latitude", latitude);
                     postData.put("longitude", longitude);
-                    String str2 =  pb.getText().toString().replace('₹',' ');
+                    String str2 =  ob.getText().toString().replace('₹',' ');
                     str2.trim();
-                    float f2 = Float.valueOf(str1);
-                    int i2 = Math.round(f1);
-                    postData.put("altered_price",i2);
+                    float f2 = Float.valueOf(str2);
+//                    int i2 = Math.round(f1);
+                    postData.put("altered_price",f2);
                     postData.put("num" , Integer.toString(nn));
                     System.out.println("Post" +postData);
                     Intent i = new Intent(Display_Bill.this, Popup_final.class);
+                    i.putExtra("map",postData);
                     startActivity(i);
-                    NetworkRequests.savestat(postData);
-//                    PostResponseAsyncTask loginTask =
-//                            new PostResponseAsyncTask(Display_Bill.this, postData);
-//                    System.out.println("Before Logging in");
-//                    loginTask.execute("http://" + ip + "/saveStat.php");
-//                    System.out.println("After Logging in....");
-
+//                    NetworkRequests.savestat(postData);
                 }
                 else
                 {

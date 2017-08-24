@@ -32,7 +32,7 @@ public class NetworkRequests {
                         try {
                             if ((int) response.get("status") == HttpURLConnection.HTTP_OK) {
                                 Log.e("Status is True", response.toString());
-
+                                MainActivity.getInstance().processFinish(response);
                             } else if ((int) response.get("status") == HttpURLConnection.HTTP_ACCEPTED) {
                                 Log.e("Status is True", response.toString());
                             } else {
