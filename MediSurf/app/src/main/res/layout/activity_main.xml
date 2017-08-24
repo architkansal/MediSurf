@@ -8,11 +8,37 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <include
             layout="@layout/app_bar"
             android:id="@+id/app_toolbar" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/app_name"
+            android:layout_below="@+id/app_toolbar"
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20sp"
+            android:id="@+id/app_name"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/app_name"
+            >
+
+            <View
+                android:id="@+id/opacityFilter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg"
+                android:layout_alignParentBottom="true"
+                android:alpha="0.4">
+            </View>
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -21,7 +47,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/app_toolbar">
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -29,21 +55,18 @@
                 android:id="@+id/my_id"
                 >
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/pic_main"
-                    android:id="@+id/my_pic"/>
 
                 <TextView
-                    android:text="Total Savings So Far "
+                    android:text="TOTAL SAVINGS TILL NOW "
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:layout_marginTop="10sp"
+                    android:layout_marginTop="30sp"
                     android:id="@+id/text_title"
                     android:textSize="25sp"
-                    android:layout_below="@+id/my_pic"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+
                     />
 
                 <TextView
@@ -52,19 +75,11 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_marginTop="10sp"
-                    android:textSize="25sp"
+                    android:textSize="45sp"
                     android:id="@+id/text_number"
-                    android:layout_below="@id/text_title"/>
-
-                <TextView
-                    android:text="and counting..."
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_marginTop="10sp"
-                    android:id="@+id/text_remaining"
-                    android:textSize="25sp"
-                    android:layout_below="@id/text_number"/>
+                    android:layout_below="@id/text_title"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"/>
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -72,7 +87,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="#2b282e"
-                    android:layout_below="@+id/text_remaining"
+                    android:layout_below="@+id/text_number"
 
                     />
 
@@ -81,11 +96,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:layout_marginTop="15sp"
+                    android:layout_marginTop="25sp"
                     android:id="@+id/text_alternatives"
                     android:textSize="20sp"
                     android:layout_marginBottom="10sp"
-                    android:layout_below="@id/text_remaining"/>
+                    android:layout_below="@id/text_number"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"/>
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/l4"
@@ -93,7 +110,9 @@
                     android:layout_height="fill_parent"
                     android:orientation="vertical"
                     android:layout_below="@+id/text_alternatives"
-                    android:layout_marginTop="10sp">
+                    android:layout_marginTop="10sp"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold">
 
                 </LinearLayout>
                 <ImageView
@@ -107,7 +126,7 @@
                     />
                 </RelativeLayout>
             </ScrollView>
-
+        </RelativeLayout>
     </RelativeLayout>
 
     <fragment
