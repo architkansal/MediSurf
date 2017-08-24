@@ -110,8 +110,6 @@ public class MainActivity extends AppCompatActivity {
                 counts.setText(jObj.getString("count").toString());
                 JSONArray jarr = jObj.getJSONArray("results");
 
-                System.out.println("FUCKOFFFFFF "+jarr);
-
                 for(int i=0;i<jarr.length();i++)
                 {
                     String orig = jarr.getJSONObject(i).getString("original");
