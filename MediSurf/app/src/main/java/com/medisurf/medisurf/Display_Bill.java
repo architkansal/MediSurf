@@ -3,7 +3,10 @@ package com.medisurf.medisurf;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.LightingColorFilter;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,9 +43,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Vector;
 import java.util.regex.Matcher;
 
+import static android.R.style.Widget;
 import static com.medisurf.medisurf.URLGenerator.ip;
 
 public class Display_Bill extends AppCompatActivity implements AsyncResponse, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
@@ -61,6 +67,7 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
     int clicked_button;
     Vector<TextView> txt;
     Vector<TextView> prc;
+    Vector<ProgressBar> barVec;
     float Optimize_total;
     float Prescribed_total;
     TextView ob;
@@ -140,6 +147,7 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
         cnt  = new HashMap<>();
         txt = new Vector<>();
         prc = new Vector<>();
+        barVec = new Vector<>();
         extras = getIntent().getExtras();
         String s1 = extras.getString("nou");
         String s2 = extras.getString("mg_ml");
@@ -204,6 +212,7 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
                             hm.put(x,cur);
                             TextView ct = txt.get(x);
                             TextView cp = prc.get(x);
+                            ProgressBar pBar = barVec.get(x);
                             try {
                                 JSONArray jo = jobj.getJSONArray(Integer.toString(x));
                                 JSONObject j1 =jo.getJSONObject(cur);
@@ -230,6 +239,10 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
 
                                 String sof1 = String.format("%.2f",Optimize_total);
                                 ob.setText("₹"+String.valueOf(sof1));
+
+                                //TODO
+                                Random r = new Random();
+                                pBar.setProgress(r.nextInt(30)+50);
                             }
                             catch(Exception e)
                             {
@@ -392,6 +405,31 @@ public class Display_Bill extends AppCompatActivity implements AsyncResponse, Go
         prc.add(tv4);
         l.addView(tv3,lp);
         l.addView(tv4,lp);
+        l2.addView(l);
+
+        width = display.getWidth() / 1;
+        l = new LinearLayout(this);
+        l.setOrientation(LinearLayout.HORIZONTAL);
+        lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
+        TextView tv = new TextView(this);
+        tv.setText("Confidence Score Bar ");
+        tv.setTextColor(Color.parseColor("#4CAF50"));
+        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+        l.addView(tv,lp);
+        l2.addView(l);
+
+        width = display.getWidth() / 1;
+        Random r = new Random();
+        l = new LinearLayout(this);
+        l.setOrientation(LinearLayout.HORIZONTAL);
+        lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
+        ProgressBar pBar = new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
+        pBar.setProgress(r.nextInt(30)+50);
+        pBar.setScaleY(3f);
+        Drawable drawable = pBar.getProgressDrawable();
+        drawable.setColorFilter(new LightingColorFilter(0xFF000000, Color.parseColor("#4CAF50")));
+        l.addView(pBar,lp);
+        barVec.add(pBar);
         l2.addView(l);
 
         width = display.getWidth() / 1;
